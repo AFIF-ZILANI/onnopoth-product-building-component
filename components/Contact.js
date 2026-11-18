@@ -6,8 +6,10 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-indigo-600/10 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/10 blur-[120px]" />
       <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
         <SectionHeading
+          index="09"
           eyebrow="Contact"
           title="কোনো প্রশ্ন আছে?"
           subtitle="যেকোনো প্রশ্ন বা সহায়তার জন্য সরাসরি যোগাযোগ করুন—আমরা সাহায্য করতে প্রস্তুত।"

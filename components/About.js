@@ -1,64 +1,102 @@
-import { Lightbulb, Code2, Rocket, Bot } from 'lucide-react';
+import { Bot, Check, Code2, Lightbulb, Rocket } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 
-const points = [
+const highlights = [
+  'একটি বাস্তব সমস্যা বেছে নাও',
+  'AI টুল দিয়ে সমাধান তৈরি করো',
+  'Vercel-এ লাইভ করে জমা দাও',
+];
+
+const features = [
   {
     icon: Lightbulb,
-    title: 'একটি বাস্তব সমস্যা বাছাই',
+    title: 'সমস্যা বাছাই',
     text: 'তোমার আশেপাশের এমন একটি সমস্যা খুঁজে বের করো, যার সমাধান একটি ওয়েব প্রোডাক্ট দেওয়া যায়।',
   },
   {
     icon: Bot,
-    title: 'AI কে সহকারী বানাও',
-    text: 'কোড, ডিজাইন আর ডিবাগিং—সব কাজে ChatGPT, Claude, Cursor-এর মতো টুল ব্যবহার করা যাবে। এটিই প্রতিযোগিতার মূল বিষয়।',
+    title: 'AI তোমার সহকারী',
+    text: 'কোড, ডিজাইন আর ডিবাগিং—ChatGPT, Claude, Cursor দিয়ে সব করা যাবে। এটিই প্রতিযোগিতার মূল বিষয়।',
   },
   {
     icon: Code2,
-    title: 'তৈরি করো গত ১২ ঘণ্টায়',
-    text: '২৭ নভেম্বর সকাল ১০টা থেকে রাত ১০টা—মাত্র ১২ ঘণ্টায় আইডিয়াকে একটি কাজ করা প্রোডাক্টে রূপ দিতে হবে।',
+    title: '১২ ঘণ্টার নির্মাণ',
+    text: '২৭ নভেম্বর সকাল ১০টা থেকে রাত ১০টা—আইডিয়াকে একটি কাজ করা প্রোডাক্টে রূপ দেওয়ার সময়।',
   },
   {
     icon: Rocket,
-    title: 'Vercel-এ ডিপ্লয়',
-    text: 'কোড GitHub-এ রেখে প্রোডাক্টটি Vercel-এ লাইভ করে জমা দিতে হবে। ফ্রি প্ল্যানই যথেষ্ট।',
+    title: 'লাইভ ডিপ্লয়',
+    text: 'কোড GitHub-এ রেখে প্রোডাক্ট Vercel-এ লাইভ করেই জমা দিতে হবে। ফ্রি প্ল্যানই যথেষ্ট।',
   },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="relative py-20 sm:py-28">
+    <section id="about" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow="About the competition"
-          title="আইডিয়া থেকে লাইভ প্রোডাক্ট"
-          subtitle="এটি কোনো পরীক্ষা নয়—এটি একটি নির্মাণের অভিজ্ঞতা। AI-এর সাহায্যে তুমি যা ভাবছো, তা কয়েক ঘণ্টার মধ্যে বাস্তবায়ন করতে পারবে।"
-        />
+        <div className="grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          {/* Left — statement */}
+          <div>
+            <SectionHeading
+              index="01"
+              eyebrow="About the competition"
+              align="left"
+              title={
+                <>
+                  আইডিয়া থেকে <span className="gradient-text">লাইভ প্রোডাক্ট</span>
+                </>
+              }
+              subtitle="এটি কোনো পরীক্ষা নয়—এটি একটি নির্মাণের অভিজ্ঞতা। AI-এর সাহায্যে তুমি যা ভাবছো, তা কয়েক ঘণ্টার মধ্যে বাস্তবায়ন করতে পারবে।"
+            />
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {points.map(({ icon: Icon, title, text }, i) => (
-            <div
-              key={title}
-              className="glass group p-6 transition duration-300 hover:-translate-y-1 hover:border-indigo-400/40"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <div className="mb-5 inline-grid h-12 w-12 place-items-center rounded-2xl bg-accent-gradient shadow-glow">
-                <Icon className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white">{title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-slate-400">{text}</p>
+            <ul className="mt-9 space-y-3.5">
+              {highlights.map((item) => (
+                <li key={item} className="flex items-center gap-3 text-sm text-slate-300">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-400/15 text-emerald-300">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              {[
+                { value: '12h', label: 'Build time' },
+                { value: 'AI', label: 'Powered' },
+                { value: '100%', label: 'Online' },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-3"
+                >
+                  <p className="text-xl font-extrabold text-white">{stat.value}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="glass mt-10 flex flex-col items-center gap-4 p-6 text-center sm:flex-row sm:text-left">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-400/10 text-emerald-300">
-            <Rocket className="h-5 w-5" />
-          </span>
-          <p className="text-sm leading-relaxed text-slate-300">
-            <span className="font-bold text-white">কোনো অভিজ্ঞতা লাগবে না।</span> যারা কখনো কোড লেখেননি,
-            তারাও AI-এর সাহায্যে এই প্রতিযোগিতায় অংশ নিতে পারেন—আসল কাজ হলো সমস্যা বাছাই এবং তার
-            সমাধান ভাবা।
-          </p>
+          {/* Right — feature grid */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {features.map(({ icon: Icon, title, text }, i) => (
+              <div
+                key={title}
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:bg-white/[0.06]"
+              >
+                <span className="absolute right-5 top-3 text-5xl font-extrabold leading-none text-white/[0.04]">
+                  0{i + 1}
+                </span>
+                <div className="relative mb-5 inline-grid h-11 w-11 place-items-center rounded-xl bg-accent-gradient shadow-glow">
+                  <Icon className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="relative text-base font-bold text-white">{title}</h3>
+                <p className="relative mt-2 text-sm leading-relaxed text-slate-400">{text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

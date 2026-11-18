@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
+import { ArrowUpRight, Heart } from 'lucide-react';
 import { event, navLinks, contacts } from '@/lib/config';
 
 export default function Footer() {
@@ -8,6 +8,25 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-white/10 bg-navy-950/70">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* Final CTA */}
+        <div className="no-print relative mb-14 overflow-hidden rounded-3xl border border-indigo-400/20 bg-gradient-to-r from-indigo-600/20 via-purple-600/15 to-transparent p-7 sm:p-9">
+          <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full bg-fuchsia-500/15 blur-[70px]" />
+          <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-300">
+                Ready to build?
+              </p>
+              <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                তোমার আইডিয়ার অপেক্ষায় আছি।
+              </h3>
+              <p className="mt-2 text-sm text-slate-400">২৩ নভেম্বরের আগে রেজিস্ট্রেশন করুন।</p>
+            </div>
+            <a href="/#register" className="btn-primary shrink-0">
+              Register Now <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
         <div className="grid gap-10 md:grid-cols-3">
           {/* Brand */}
           <div>
@@ -71,6 +90,9 @@ export default function Footer() {
             © {year} {event.organizer}. All rights reserved.
             <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />
           </p>
+          <a href="#home" className="transition hover:text-indigo-300">
+            Back to top ↑
+          </a>
         </div>
       </div>
     </footer>

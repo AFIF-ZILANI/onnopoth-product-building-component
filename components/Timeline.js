@@ -6,13 +6,13 @@ const items = [
     icon: CalendarRange,
     date: '২০–২৩ নভেম্বর',
     title: 'রেজিস্ট্রেশন ও আইডিয়া জমা',
-    text: 'ফর্ম পূরণ করে নিজের আইডিয়া জমা দিন। টিম হলে সবার নাম ও টিম লিডার উল্লেখ করুন।',
+    text: 'ফর্ম পূরণ করে প্রোডাক্টের নাম ও আইডিয়া জমা দিন। টিম হলে সবার নাম ও টিম লিডার উল্লেখ করুন।',
   },
   {
     icon: ListChecks,
     date: '২৪ নভেম্বর',
     title: 'আইডিয়া যাচাই',
-    text: 'আয়োজক কমিটি আইডিয়াগুলোর স্পষ্টতা ও ১২ ঘণ্টায় বানানোর সম্ভাবনা যাচাই করবে।',
+    text: 'আইডিয়ার স্পষ্টতা ও ১২ ঘণ্টায় বানানোর সম্ভাবনা যাচাই করবে আয়োজক কমিটি।',
   },
   {
     icon: CheckCircle2,
@@ -28,9 +28,9 @@ const items = [
   },
   {
     icon: Cpu,
-    date: '২৭ নভেম্বর (শুক্রবার)',
+    date: '২৭ নভেম্বর · শুক্রবার',
     title: 'মূল প্রতিযোগিতা · ১২ ঘণ্টা',
-    text: 'সকাল ১০টা থেকে রাত ১০টা। ১০টার পর নতুন GitHub রিপো খুলে কাজ শুরু, রাত ৯টায় Vercel ডিপ্লয় শুরু।',
+    text: 'সকাল ১০টার পর নতুন GitHub রিপো খুলে কাজ শুরু, রাত ৯টায় Vercel ডিপ্লয় শুরু, রাত ১০টায় জমা দেওয়া।',
     highlight: true,
   },
   {
@@ -43,58 +43,87 @@ const items = [
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="relative py-20 sm:py-28">
-      {/* subtle divider glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <section id="timeline" className="relative py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-indigo-500/25 to-transparent" />
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index="03"
           eyebrow="Timeline"
           title="প্রতিযোগিতার সময়সূচি"
           subtitle="রেজিস্ট্রেশন থেকে ফলাফল—সব ধাপ এক নজরে।"
         />
 
-        <div className="relative mt-14">
-          {/* vertical line */}
-          <div className="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-indigo-400/60 via-purple-400/40 to-transparent sm:left-1/2 sm:-translate-x-1/2" />
+        <div className="relative mt-16">
+          {/* glowing spine */}
+          <div className="absolute bottom-2 left-[19px] top-2 w-px bg-gradient-to-b from-indigo-400/70 via-purple-400/40 to-transparent sm:left-1/2 sm:-translate-x-1/2" />
 
-          <ol className="space-y-8">
+          <ol className="space-y-7">
             {items.map((item, i) => {
               const Icon = item.icon;
               const left = i % 2 === 0;
+
               return (
-                <li key={item.title} className="relative sm:grid sm:grid-cols-2 sm:gap-12">
-                  {/* dot */}
+                <li key={item.title} className="relative sm:grid sm:grid-cols-2 sm:gap-14">
+                  {/* node */}
                   <span
-                    className={`absolute left-[7px] top-6 z-10 grid h-[25px] w-[25px] place-items-center rounded-full border-2 sm:left-1/2 sm:-translate-x-1/2 ${
+                    className={`absolute left-[7px] top-7 z-10 grid h-[25px] w-[25px] place-items-center rounded-full border-2 sm:left-1/2 sm:-translate-x-1/2 ${
                       item.highlight
-                        ? 'border-fuchsia-400 bg-fuchsia-500 shadow-[0_0_18px_rgba(217,70,239,0.7)]'
-                        : 'border-indigo-400 bg-navy-900'
+                        ? 'border-fuchsia-400 bg-fuchsia-500 shadow-[0_0_22px_rgba(217,70,239,0.8)]'
+                        : 'border-indigo-400 bg-navy-950 shadow-[0_0_0_5px_rgba(99,102,241,0.08)]'
                     }`}
                   >
                     <span className={`h-2 w-2 rounded-full ${item.highlight ? 'bg-white' : 'bg-indigo-400'}`} />
                   </span>
 
-                  {/* card */}
                   <div
                     className={`ml-12 sm:ml-0 ${
                       left ? 'sm:col-start-1 sm:pr-2 sm:text-right' : 'sm:col-start-2 sm:pl-2'
                     }`}
                   >
                     <div
-                      className={`glass p-5 transition hover:-translate-y-0.5 hover:border-indigo-400/40 ${
-                        item.highlight ? '!border-fuchsia-400/40 bg-fuchsia-500/[0.07]' : ''
+                      className={`group relative overflow-hidden rounded-3xl border p-6 transition duration-300 hover:-translate-y-1 ${
+                        item.highlight
+                          ? 'border-fuchsia-400/40 bg-fuchsia-500/[0.09] shadow-[0_25px_60px_-35px_rgba(217,70,239,0.65)]'
+                          : 'border-white/10 bg-white/[0.035] hover:border-indigo-400/40 hover:bg-white/[0.06]'
                       }`}
                     >
+                      <span className="absolute -right-2 -top-6 text-7xl font-extrabold leading-none text-white/[0.035]">
+                        0{i + 1}
+                      </span>
+
                       <div
-                        className={`mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-indigo-300 ${
+                        className={`relative flex items-center gap-2 ${
                           left ? 'sm:justify-end' : ''
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
-                        {item.date}
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
+                            item.highlight
+                              ? 'bg-fuchsia-400/20 text-fuchsia-200'
+                              : 'bg-indigo-500/15 text-indigo-300'
+                          }`}
+                        >
+                          {item.date}
+                        </span>
+                        <span
+                          className={`grid h-7 w-7 place-items-center rounded-lg ${
+                            item.highlight ? 'bg-fuchsia-400/20 text-fuchsia-200' : 'bg-white/5 text-slate-400'
+                          }`}
+                        >
+                          <Icon className="h-3.5 w-3.5" />
+                        </span>
                       </div>
-                      <h3 className="text-base font-bold text-white sm:text-lg">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.text}</p>
+
+                      {item.highlight && (
+                        <span className="relative mt-4 inline-block rounded-full bg-accent-gradient px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.18em] text-white">
+                          Main Event
+                        </span>
+                      )}
+
+                      <h3 className="relative mt-3 text-base font-bold text-white sm:text-lg">
+                        {item.title}
+                      </h3>
+                      <p className="relative mt-2 text-sm leading-relaxed text-slate-400">{item.text}</p>
                     </div>
                   </div>
                 </li>

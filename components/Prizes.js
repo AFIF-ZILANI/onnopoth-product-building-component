@@ -41,6 +41,7 @@ export default function Prizes() {
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index="06"
           eyebrow="Prizes"
           title="পুরস্কার"
           subtitle={`সেরা তিনটি প্রোডাক্টের জন্য রয়েছে উপহার। ${event.prizeLabel} — অপেক্ষা করছে তোমার জন্য!`}
