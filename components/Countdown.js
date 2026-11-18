@@ -17,9 +17,9 @@ function getRemaining() {
   };
 }
 
-/** Live countdown to the competition start (27 Nov 2026, 10:00 AM UTC+6). */
+/** Compact countdown used inside the hero's event-pass card. */
 export default function Countdown() {
-  // Start with zeros on both server and client to avoid hydration mismatch.
+  // Zeros on both server and client first → no hydration mismatch.
   const [time, setTime] = useState(EMPTY);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Countdown() {
 
   if (time.started) {
     return (
-      <div className="inline-flex items-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-sm font-bold text-emerald-300">
+      <div className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-4 text-sm font-bold text-emerald-300">
         <span className="relative flex h-2.5 w-2.5">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
@@ -41,30 +41,28 @@ export default function Countdown() {
   }
 
   const boxes = [
-    { value: time.days, label: 'দিন' },
-    { value: time.hours, label: 'ঘণ্টা' },
-    { value: time.minutes, label: 'মিনিট' },
-    { value: time.seconds, label: 'সেকেন্ড' },
+    { value: time.days, label: 'Days' },
+    { value: time.hours, label: 'Hours' },
+    { value: time.minutes, label: 'Mins' },
+    { value: time.seconds, label: 'Secs' },
   ];
 
   return (
-    <div>
-      <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-        প্রতিযোগিতা শুরু হতে বাকি
-      </p>
-      <div className="flex justify-center gap-2 sm:gap-3">
-        {boxes.map((box) => (
-          <div
-            key={box.label}
-            className="glass min-w-[64px] px-2 py-3 text-center sm:min-w-[84px] sm:py-4"
-          >
-            <div className="font-mono text-2xl font-extrabold tabular-nums text-white sm:text-4xl">
-              {String(box.value).padStart(2, '0')}
-            </div>
-            <div className="mt-1 text-[10px] font-medium text-slate-400 sm:text-xs">{box.label}</div>
+    <div className="grid grid-cols-4 gap-2 sm:gap-2.5">
+      {boxes.map((box) => (
+        <div
+          key={box.label}
+          className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] px-1 py-3 text-center"
+        >
+          <div className="absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/60 to-transparent" />
+          <div className="font-mono text-xl font-bold tabular-nums tracking-tight text-white sm:text-2xl">
+            {String(box.value).padStart(2, '0')}
           </div>
-        ))}
-      </div>
+          <div className="mt-1 text-[9px] font-bold uppercase tracking-[0.16em] text-slate-500 sm:text-[10px]">
+            {box.label}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

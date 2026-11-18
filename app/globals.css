@@ -35,6 +35,28 @@ section[id] {
   color: #fff;
 }
 
+/* Faint perspective grid behind the hero, faded out towards the edges. */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.07) 1px, transparent 1px);
+  background-size: 58px 58px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 28%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 28%, #000 25%, transparent 100%);
+}
+
+/* Ultra-thin gradient hairline used on the hero card. */
+.hero-hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(129, 140, 248, 0.55),
+    rgba(217, 70, 239, 0.4),
+    transparent
+  );
+}
+
 /* ---------------------------------------------------------------------------
    REUSABLE COMPONENT CLASSES
 --------------------------------------------------------------------------- */
