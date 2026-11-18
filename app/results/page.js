@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { Crown, Medal, Award, Clock3, Trophy, BarChart3 } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
-import { results, judgingCriteria, prizes, dates } from '@/lib/config';
+import { results as configResults, judgingCriteria, prizes, dates } from '@/lib/config';
+import { getRecords } from '@/lib/gmail-store';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'ফলাফল',
@@ -10,7 +13,15 @@ export const metadata = {
 
 const ICONS = { gold: Crown, silver: Medal, bronze: Award };
 
-export default function ResultsPage() {
+export default async function ResultsPage() {
+  let results = configResults || [];
+  try {
+    const stored = await getRecords();
+    if (stored.results?.length) results = stored.results[0].winners || [];
+  } catch {
+    // Fall back to config values if Gmail is unreachable.
+  }
+
   return (
     <div className="min-h-screen py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

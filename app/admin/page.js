@@ -26,6 +26,8 @@ export default function AdminPage() {
   const [loadError, setLoadError] = useState('');
   const [busy, setBusy] = useState('');
   const [reminding, setReminding] = useState(false);
+  const [resultsJson, setResultsJson] = useState('');
+  const [publishing, setPublishing] = useState(false);
   const [toast, setToast] = useState('');
 
   async function loadIdeas() {
@@ -86,6 +88,26 @@ export default function AdminPage() {
       setToast(`সমস্যা: ${error.message}`);
     } finally {
       setReminding(false);
+    }
+  }
+
+  async function publishResults() {
+    setPublishing(true);
+    setToast('');
+    try {
+      const winners = JSON.parse(resultsJson);
+      const res = await fetch('/api/admin/results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ winners }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'ব্যর্থ।');
+      setToast(`${data.published} টি প্লেস প্রকাশিত, ${data.emailsSent} টি ইমেইল পাঠানো হয়েছে।`);
+    } catch (error) {
+      setToast(`সমস্যা: ${error.message}`);
+    } finally {
+      setPublishing(false);
     }
   }
 
@@ -294,6 +316,28 @@ export default function AdminPage() {
             ))}
           </div>
         )}
+
+        {/* Publish final results (up to 10 places) */}
+        <div className="glass mt-10 p-7 sm:p-9">
+          <h3 className="text-lg font-bold text-white">ফলাফল প্রকাশ করুন (সর্বোচ্চ ১০ প্লেস)</h3>
+          <p className="mt-2 text-sm text-slate-400">
+            নিচের ফরম্যাটে JSON পেস্ট করুন। প্রকাশের সাথে সাথেই winner-কে ফলাফল ইমেইল যাবে।
+          </p>
+          <textarea
+            className="field-input mt-5 min-h-[180px] resize-y font-mono text-xs"
+            placeholder={'[\n  {"place":"1st","name":"Team A","email":"a@example.com","product":"Product A","institution":"College","marks":92},\n  {"place":"2nd","name":"Team B","email":"b@example.com","product":"Product B","institution":"College","marks":88}\n]'}
+            value={resultsJson}
+            onChange={(e) => setResultsJson(e.target.value)}
+          />
+          <button
+            onClick={publishResults}
+            disabled={publishing || !resultsJson.trim()}
+            className="btn-primary mt-5"
+          >
+            {publishing ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
+            প্রকাশ করুন ও ইমেইল পাঠান
+          </button>
+        </div>
       </div>
     </div>
   );
