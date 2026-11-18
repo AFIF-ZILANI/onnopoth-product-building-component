@@ -8,6 +8,7 @@
 
 import nodemailer from 'nodemailer';
 import { event, isSubmissionOpen } from '@/lib/config';
+import { isApprovalToken, verifyToken } from '@/lib/admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -126,6 +127,14 @@ export async function POST(req) {
 
     // Honeypot — silent success for bots.
     if (clean(body.website)) return Response.json({ ok: true });
+
+    // Only participants whose idea was approved (signed link from email) may submit.
+    if (!isApprovalToken(body.token)) {
+      return Response.json(
+        { error: 'আপনার আইডিয়া এখনো অ্যাপ্রুভ হয়নি বা লিংকটি মেয়াদোত্তীর্ণ।' },
+        { status: 403 }
+      );
+    }
 
     if (!isSubmissionOpen()) {
       return Response.json(

@@ -52,8 +52,22 @@ export default function SubmissionForm() {
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('');
   const [open, setOpen] = useState(null);
+  const [access, setAccess] = useState(null); // null = checking approval
+  const [token, setToken] = useState('');
 
-  useEffect(() => setOpen(isSubmissionOpen()), []);
+  useEffect(() => {
+    setOpen(isSubmissionOpen());
+    const t = new URLSearchParams(window.location.search).get('token') || '';
+    setToken(t);
+    if (!t) {
+      setAccess({ allowed: false });
+      return;
+    }
+    fetch(`/api/submit/access?token=${encodeURIComponent(t)}`)
+      .then((res) => res.json().catch(() => ({ allowed: false })))
+      .then((data) => setAccess(data.allowed ? data : { allowed: false }))
+      .catch(() => setAccess({ allowed: false }));
+  }, []);
 
   const set = (name, value) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -90,7 +104,7 @@ export default function SubmissionForm() {
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, token }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
@@ -122,6 +136,29 @@ export default function SubmissionForm() {
           subtitle={`সব লিংক যাচাই করে ${dates.submissionDeadlineLabel}-এর আগে জমা দিন।`}
         />
 
+        {access === null ? (
+          <div className="mt-16 flex justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-indigo-300" />
+          </div>
+        ) : !access.allowed ? (
+          <div className="glass mx-auto mt-14 max-w-2xl p-8 text-center sm:p-12">
+            <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-amber-400/15 text-amber-300">
+              <Lock className="h-7 w-7" />
+            </div>
+            <h3 className="text-2xl font-extrabold text-white">আগে আইডিয়া অ্যাপ্রুভ করুন</h3>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              ফাইনাল প্রোডাক্ট জমা দেওয়ার আগে আপনার আইডিয়া আয়োজক কমিটি দ্বারা যাচাই হতে হবে।
+              আপনার রেজিস্ট্রেশন ইমেইলে অ্যাপ্রুভাল লিংক পাঠানো হবে — সেই লিংক দিয়েই এই ফর্ম খুলবে।
+            </p>
+            <p className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-semibold text-slate-300">
+              এখনো অ্যাপ্রুভ হয়নি? পরবর্তী রাউন্ডে আবার চেষ্টা করুন 😊
+            </p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/#register" className="btn-primary">রেজিস্ট্রেশন দেখুন</a>
+              <Link href="/rulebook" className="btn-secondary">রুলবুক পড়ুন</Link>
+            </div>
+          </div>
+        ) : (
         <div className="mt-14 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <aside className="space-y-4 lg:sticky lg:top-28">
             <div className="glass relative overflow-hidden p-7">
@@ -292,6 +329,7 @@ export default function SubmissionForm() {
             )}
           </form>
         </div>
+        )}
       </div>
     </section>
   );

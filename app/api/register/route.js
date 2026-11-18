@@ -287,6 +287,28 @@ export async function POST(req) {
       to: RECEIVER_EMAIL,
       replyTo: data.email,
       subject: `New Registration: ${data.productName} – ${leaderName}`,
+      // Machine-readable copy of the idea so the admin panel can list every
+      // submission straight from the Gmail inbox (no database needed).
+      headers: {
+        'X-OnnoPoth-Registration': Buffer.from(
+          JSON.stringify({
+            name: leaderName,
+            email: data.email,
+            productName: data.productName,
+            registrationType: data.registrationType,
+            teamName: data.teamName,
+            members: data.members,
+            institution: data.institution,
+            className: data.className,
+            whatsapp: data.whatsapp,
+            github: data.github,
+            problem: data.problem,
+            users: data.users,
+            features: data.features,
+            submittedAt: new Date().toISOString(),
+          })
+        ).toString('base64'),
+      },
       html: buildOrganizerEmail(data, leaderName, isTeam),
       text: `New Registration\n\nProduct: ${data.productName}\nName: ${leaderName}\nEmail: ${data.email}\nWhatsApp: ${data.whatsapp}\nInstitution: ${data.institution}`,
     });
