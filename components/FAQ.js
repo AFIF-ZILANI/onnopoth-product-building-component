@@ -1,28 +1,25 @@
-'use client';
-
-import { useState } from 'react';
-import { ArrowUpRight, ChevronDown, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Bot, MessageCircle } from 'lucide-react';
 import SectionHeading from './SectionHeading';
-import { faqItems, extraFaqItems } from '@/lib/rulebook';
+import FaqChatbot from './FaqChatbot';
 import { contacts } from '@/lib/config';
 
-const allFaqItems = [...faqItems, ...extraFaqItems];
-
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(0);
-
   return (
-    <section data-reveal className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
-          {/* Left — heading + help card */}
+    <section id="faq" data-reveal className="relative py-24 sm:py-32">
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-96 w-[46rem] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
+          {/* Left — heading + human fallback */}
           <div>
             <SectionHeading
-              index="08"
-              eyebrow="FAQ"
+              eyebrow="AI assistant"
               align="left"
-              title="সাধারণ প্রশ্ন"
-              subtitle="মনে কোনো প্রশ্ন এসেছে? এখানে উত্তর পেতে পারো।"
+              title={
+                <>
+                  প্রশ্ন করো, <span className="gradient-text">উত্তর পাও</span>
+                </>
+              }
+              subtitle="এখন আর accordion খুঁজতে হবে না — আমাদের AI অ্যাসিস্ট্যান্টের সাথে চ্যাট করে সাধারণ প্রশ্নের উত্তর নিন।"
             />
 
             <div className="glass relative mt-9 overflow-hidden p-7">
@@ -30,9 +27,9 @@ export default function FAQ() {
               <div className="mb-4 inline-grid h-11 w-11 place-items-center rounded-2xl bg-indigo-500/15 text-indigo-300">
                 <MessageCircle className="h-5 w-5" />
               </div>
-              <p className="text-base font-bold text-white">এখনো কিছু জানার আছে?</p>
+              <p className="text-base font-bold text-white">বট উত্তর দিতে না পারলে?</p>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                নিচ থেকে আয়োজক কমিটির সাথে যোগাযোগ করুন—হেল্প করতে আমরা প্রস্তুত।
+                নিচ থেকে আয়োজক কমিটির সাথে সরাসরি যোগাযোগ করুন — হেল্প করতে আমরা প্রস্তুত।
               </p>
               <div className="mt-6 space-y-3">
                 {contacts.map((person) => (
@@ -52,58 +49,14 @@ export default function FAQ() {
                 ))}
               </div>
             </div>
+
+            <p className="mt-5 flex items-center gap-2 text-xs text-slate-500">
+              <Bot className="h-3.5 w-3.5 text-indigo-300" /> চ্যাটটি রুলবুকের তথ্য দিয়ে চলে — যেকোনো প্রশ্ন চেষ্টা করে দেখুন।
+            </p>
           </div>
 
-          {/* Right — accordion */}
-          <div className="space-y-3">
-            {allFaqItems.map((item, i) => {
-              const isOpen = openIndex === i;
-              return (
-                <div
-                  key={item.q}
-                  className={`overflow-hidden rounded-2xl border transition duration-300 ${
-                    isOpen
-                      ? 'border-indigo-400/40 bg-indigo-500/[0.07]'
-                      : 'border-white/10 bg-white/[0.025] hover:border-white/20'
-                  }`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? -1 : i)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-center gap-4 p-5 text-left"
-                  >
-                    <span
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[11px] font-extrabold ${
-                        isOpen ? 'bg-accent-gradient text-white' : 'bg-white/5 text-slate-500'
-                      }`}
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="flex-1 text-sm font-semibold text-white sm:text-base">
-                      {item.q}
-                    </span>
-                    <ChevronDown
-                      className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-indigo-300' : ''
-                      }`}
-                    />
-                  </button>
-                  <div
-                    className={`grid transition-all duration-300 ${
-                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="border-t border-white/10 px-5 py-5 pl-[4.5rem] text-sm leading-relaxed text-slate-400">
-                        {item.a}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* Right — chatbot */}
+          <FaqChatbot />
         </div>
       </div>
     </section>
