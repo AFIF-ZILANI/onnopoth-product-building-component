@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050a1f"/>
+      <stop offset="1" stop-color="#0a1230"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="0.5" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="180" cy="80" r="260" fill="#3b82f6" opacity=".14"/>
+  <circle cx="1050" cy="560" r="300" fill="#a855f7" opacity=".14"/>
+  <!-- OnnoPoth logo -->
+  <rect x="80" y="46" width="62" height="62" rx="14" fill="#142A55"/>
+  <path d="M107 65.6 L98.2 74.4" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M98.2 74.4 C95.4 77.8 96.1 84 100.4 87.8 C105.4 91.9 112.6 89.6 115.1 84 C116.6 80.3 114.9 76.3 111.3 73.6" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="108.2" cy="64.2" r="2.1" fill="#8FB2FF"/>
+  <text x="160" y="86" fill="#a5b4fc" font-family="Arial, sans-serif" font-size="26" font-weight="bold" letter-spacing="4">ONNOPOTH PRESENTS</text>
+  <text x="80" y="230" fill="#ffffff" font-family="Arial, sans-serif" font-size="78" font-weight="bold">Product Building</text>
+  <text x="80" y="325" fill="url(#accent)" font-family="Arial, sans-serif" font-size="78" font-weight="bold">Competition (Using AI)</text>
+  <text x="80" y="410" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="32">AI-এর সাহায্যে আইডিয়াকে বাস্তব প্রোডাক্টে রূপ দাও</text>
+  <rect x="80" y="470" width="330" height="56" rx="28" fill="url(#accent)"/>
+  <text x="245" y="507" fill="#ffffff" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle">27 Nov 2026 · 12 Hours · Online</text>
+  <text x="80" y="585" fill="#64748b" font-family="Arial, sans-serif" font-size="22">Organized by OnnoPoth — আয়োজক কমিটি</text>
+</svg>

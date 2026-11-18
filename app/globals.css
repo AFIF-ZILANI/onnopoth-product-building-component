@@ -1,0 +1,176 @@
+/* Noto Sans Bengali — loaded from Google Fonts. Bangla is the default typeface. */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   BASE
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-navy-950 text-slate-100 antialiased;
+  background-image:
+    radial-gradient(60rem 60rem at 12% -10%, rgba(59, 130, 246, 0.18), transparent 55%),
+    radial-gradient(55rem 55rem at 92% 8%, rgba(168, 85, 247, 0.16), transparent 55%),
+    radial-gradient(45rem 45rem at 50% 100%, rgba(99, 102, 241, 0.12), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Offset anchor links so the sticky navbar doesn't cover section titles. */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.45);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------------
+   REUSABLE COMPONENT CLASSES
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Frosted-glass card used throughout the site. */
+  .glass {
+    @apply rounded-3xl border border-white/10 bg-white/[0.045] backdrop-blur-xl;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 50px -25px rgba(0, 0, 0, 0.8);
+  }
+
+  .glass-strong {
+    @apply rounded-2xl border border-white/10 bg-navy-900/80 backdrop-blur-xl;
+  }
+
+  /* Gradient text for headlines. */
+  .gradient-text {
+    @apply bg-accent-gradient bg-clip-text text-transparent;
+  }
+
+  /* Primary call-to-action button. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent-gradient px-6 py-3
+           text-sm font-bold text-white shadow-glow-blue transition
+           hover:-translate-y-0.5 hover:shadow-glow focus:outline-none focus:ring-2
+           focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-navy-950
+           disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
+  }
+
+  /* Secondary / outline button. */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15
+           bg-white/5 px-6 py-3 text-sm font-bold text-slate-100 backdrop-blur transition
+           hover:-translate-y-0.5 hover:border-indigo-400/60 hover:bg-white/10
+           focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2
+           focus:ring-offset-navy-950;
+  }
+
+  /* Small pill badge (Hero, badges). */
+  .badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5
+           px-3.5 py-1.5 text-xs font-semibold text-slate-200 backdrop-blur;
+  }
+
+  /* Form field label. */
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-slate-200;
+  }
+
+  /* Form input / textarea / select. */
+  .field-input {
+    @apply w-full rounded-xl border border-white/10 bg-navy-950/60 px-4 py-3 text-sm
+           text-white placeholder:text-slate-500 outline-none transition
+           focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/30;
+  }
+
+  .field-error {
+    @apply mt-1.5 flex items-center gap-1.5 text-xs font-medium text-rose-400;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   SCROLLBAR (subtle, dark)
+--------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050a1f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a3560;
+  border-radius: 999px;
+  border: 2px solid #050a1f;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4f5bb0;
+}
+
+/* ---------------------------------------------------------------------------
+   PRINT — used by the /rulebook "Print / Save as PDF" button
+--------------------------------------------------------------------------- */
+@media print {
+  @page {
+    margin: 16mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    background-image: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Rulebook content becomes a clean black-on-white document. */
+  .print-document {
+    background: #ffffff !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    border: none !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .print-document * {
+    color: #111827 !important;
+    border-color: #d1d5db !important;
+  }
+
+  .print-document a {
+    color: #1d4ed8 !important;
+    text-decoration: underline;
+  }
+
+  .print-document section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-document h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}
+
+/* Hide the honeypot from humans (and from layout) but keep it in the DOM. */
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

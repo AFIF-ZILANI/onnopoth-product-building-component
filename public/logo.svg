@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <title>OnnoPoth</title>
+  <!-- White open loop + diagonal stroke, with the signature blue dot -->
+  <path d="M275 186 L207 255" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M207 255 C185 282 190 332 225 362 C265 395 322 377 342 332 C354 302 341 270 312 249" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="282" cy="175" r="17" fill="#8FB2FF"/>
+</svg>
