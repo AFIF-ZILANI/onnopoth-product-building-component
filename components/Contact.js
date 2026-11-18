@@ -1,5 +1,6 @@
 import { ArrowUpRight, Globe, MessageCircle, Phone, UserRound } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { CommunityCard } from './ShareButtons';
 import { contacts } from '@/lib/config';
 
 export default function Contact() {
@@ -65,6 +66,10 @@ export default function Contact() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-5">
+          <CommunityCard />
         </div>
       </div>
     </section>

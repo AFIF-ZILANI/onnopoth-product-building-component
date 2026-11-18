@@ -71,9 +71,12 @@ export default function RulebookPage() {
           <article className="print-document glass p-6 sm:p-10">
             <RulebookRenderer sections={rulebookSections} />
 
-            <div className="no-print mt-12 border-t border-white/10 pt-6 text-center">
+            <div className="no-print mt-12 flex flex-col items-center justify-center gap-3 border-t border-white/10 pt-6 sm:flex-row">
               <Link href="/#register" className="btn-primary">
                 রেজিস্ট্রেশন করুন
+              </Link>
+              <Link href="/submit" className="btn-secondary">
+                প্রোডাক্ট জমা দিন
               </Link>
             </div>
           </article>

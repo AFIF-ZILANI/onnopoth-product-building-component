@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 import Countdown from './Countdown';
+import ShareButtons from './ShareButtons';
 import { event, socialLinks } from '@/lib/config';
 
 /** Small row inside the event-pass card. */
@@ -100,6 +101,10 @@ export default function Hero() {
               <Link href={socialLinks.rulebook} className="btn-secondary w-full sm:w-auto">
                 Rulebook দেখো
               </Link>
+            </div>
+
+            <div className="mt-5 flex justify-center lg:justify-start">
+              <ShareButtons />
             </div>
 
             {/* Stat strip */}
