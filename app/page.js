@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import About from '@/components/About';
+import AiCoreSection from '@/components/AiCoreSection';
 import WhoCanJoin from '@/components/WhoCanJoin';
 import Timeline from '@/components/Timeline';
 import HowItWorks from '@/components/HowItWorks';
@@ -17,6 +18,7 @@ export default function HomePage() {
     <>
       <Hero />
       <About />
+      <AiCoreSection />
       <WhoCanJoin />
       <Timeline />
       <HowItWorks />

@@ -1,5 +1,6 @@
 import { Crown, Medal, Award, Gift, Sparkles } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import LazyObject3D from './three/LazyObject3D';
 import { prizes, event } from '@/lib/config';
 
 /**
@@ -47,7 +48,13 @@ export default function Prizes() {
           subtitle={`সেরা তিনটি প্রোডাক্টের জন্য রয়েছে উপহার। ${event.prizeLabel} — অপেক্ষা করছে তোমার জন্য!`}
         />
 
-        <div className="mt-16 grid items-stretch gap-6 md:grid-cols-3">
+        {/* Interactive 3D trophy */}
+        <div className="relative mx-auto mt-10 h-44 w-44 sm:h-52 sm:w-52">
+          <div className="pointer-events-none absolute inset-4 rounded-full bg-amber-400/20 blur-[60px]" />
+          <LazyObject3D variant="trophy" className="relative z-10" />
+        </div>
+
+        <div className="mt-8 grid items-stretch gap-6 md:grid-cols-3">
           {prizes.map((p, i) => {
             const t = themes[p.theme];
             const Icon = t.icon;
