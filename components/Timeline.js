@@ -87,15 +87,22 @@ export default function Timeline() {
                           : 'border-white/10 bg-white/[0.035] hover:border-indigo-400/40 hover:bg-white/[0.06]'
                       }`}
                     >
-                      <span className="absolute -right-2 -top-6 text-7xl font-extrabold leading-none text-white/[0.035]">
-                        0{i + 1}
-                      </span>
-
                       <div
-                        className={`relative flex items-center gap-2 ${
+                        className={`relative flex flex-wrap items-center gap-2 ${
                           left ? 'sm:justify-end' : ''
                         }`}
                       >
+                        {/* Clear step number — always fully inside the card */}
+                        <span
+                          className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[11px] font-extrabold tabular-nums ${
+                            item.highlight
+                              ? 'bg-fuchsia-400/25 text-fuchsia-100'
+                              : 'bg-indigo-500/20 text-indigo-200'
+                          }`}
+                          aria-label={`ধাপ ${i + 1}`}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
                         <span
                           className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
                             item.highlight
