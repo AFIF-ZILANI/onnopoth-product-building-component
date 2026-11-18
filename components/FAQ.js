@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { Plus, Minus, HelpCircle } from 'lucide-react';
 import SectionHeading from './SectionHeading';
-import { faqItems } from '@/lib/rulebook';
+import { faqItems, extraFaqItems } from '@/lib/rulebook';
+
+const allFaqItems = [...faqItems, ...extraFaqItems];
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -18,7 +20,7 @@ export default function FAQ() {
         />
 
         <div className="mt-12 space-y-3">
-          {faqItems.map((item, i) => {
+          {allFaqItems.map((item, i) => {
             const isOpen = openIndex === i;
             return (
               <div key={item.q} className="glass overflow-hidden">

@@ -99,6 +99,9 @@ export default function RegistrationForm() {
     if (isTeam && !form.members.some((m) => m.trim())) {
       next.members = 'কমপক্ষে একজন সদস্যের নাম লিখুন।';
     }
+    if (isTeam && !form.teamName.trim()) {
+      next.teamName = 'টিমের নাম আবশ্যক।';
+    }
     if (!form.institution.trim()) next.institution = 'প্রতিষ্ঠানের নাম আবশ্যক।';
     if (!form.className.trim()) next.className = 'শ্রেণি/সেমিস্টার আবশ্যক।';
 
@@ -218,14 +221,16 @@ export default function RegistrationForm() {
               </h3>
 
               <div>
-                <label className="field-label" htmlFor="teamName">টিমের নাম (ঐচ্ছিক)</label>
+                <label className="field-label" htmlFor="teamName">টিমের নাম *</label>
                 <input
                   id="teamName"
                   className="field-input"
                   placeholder="যেমন: Team Syntax Error"
                   value={form.teamName}
                   onChange={(e) => setField('teamName', e.target.value)}
+                  aria-invalid={!!errors.teamName}
                 />
+                <FieldError message={errors.teamName} />
               </div>
 
               <div className="mt-5">

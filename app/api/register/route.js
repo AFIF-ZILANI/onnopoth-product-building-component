@@ -83,6 +83,7 @@ function validate(data) {
     const members = (data.members || []).map(clean).filter(Boolean);
     if (members.length === 0) errors.members = 'কমপক্ষে একজন সদস্যের নাম লিখুন।';
     if (members.length > 3) errors.members = 'সর্বোচ্চ ৩ জন সদস্য হতে পারে।';
+    if (!clean(data.teamName)) errors.teamName = 'টিমের নাম আবশ্যক।';
   }
 
   if (!clean(data.institution)) errors.institution = 'প্রতিষ্ঠানের নাম আবশ্যক।';

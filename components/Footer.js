@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
-import { event, navLinks, contact } from '@/lib/config';
+import { event, navLinks, contacts } from '@/lib/config';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -46,19 +46,22 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Contact</h3>
-            <p className="mt-4 text-sm text-slate-400">
-              {contact.person}
-              <br />
-              {contact.phone}
-            </p>
-            <a
-              href={contact.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex text-sm font-semibold text-indigo-300 hover:text-indigo-200"
-            >
-              WhatsApp →
-            </a>
+            <ul className="mt-4 space-y-3">
+              {contacts.map((person) => (
+                <li key={person.phone} className="text-sm text-slate-400">
+                  <span className="block font-semibold text-slate-200">{person.name}</span>
+                  <span>{person.phone}</span>{' '}
+                  <a
+                    href={person.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-1 font-semibold text-indigo-300 hover:text-indigo-200"
+                  >
+                    WhatsApp →
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
