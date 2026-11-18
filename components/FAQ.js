@@ -30,22 +30,22 @@ export default function FAQ() {
               <div className="mb-4 inline-grid h-11 w-11 place-items-center rounded-2xl bg-indigo-500/15 text-indigo-300">
                 <MessageCircle className="h-5 w-5" />
               </div>
-              <p className="text-base font-bold text-white">এখনো কিছু বাকি?</p>
+              <p className="text-base font-bold text-white">এখনো কিছু জানার আছে?</p>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                আমাদের আয়োজক কমিটির সাথে সরাসরি যোগাযোগ করুন—সাহায্য করতে আমরা প্রস্তুত।
+                নিচ থেকে আয়োজক কমিটির সাথে যোগাযোগ করুন—হেল্প করতে আমরা প্রস্তুত।
               </p>
               <div className="mt-6 space-y-3">
                 {contacts.map((person) => (
                   <a
-                    key={person.phone}
-                    href={person.whatsapp}
+                    key={person.name}
+                    href={person.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200 transition hover:border-indigo-400/40"
                   >
                     <span>
                       <span className="block font-semibold">{person.name}</span>
-                      <span className="text-xs text-slate-500">{person.phone}</span>
+                      <span className="text-xs text-slate-500">{person.detail}</span>
                     </span>
                     <ArrowUpRight className="h-4 w-4 text-indigo-300" />
                   </a>

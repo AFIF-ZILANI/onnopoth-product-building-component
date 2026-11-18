@@ -71,8 +71,8 @@ export default function Hero() {
               {event.tagline}
             </p>
             <p className="mt-2 text-sm text-slate-500">
-              আয়োজক: <span className="font-semibold text-slate-300">{event.organizer}</span> · যেকোনো
-              প্রতিষ্ঠানের শিক্ষার্থীদের জন্য উন্মুক্ত
+              আয়োজক: <span className="font-semibold text-slate-300">{event.organizer}</span> · সব
+              প্রতিষ্ঠানের শিক্ষার্থীদের জন্য ওপেন
             </p>
 
             {/* Key facts */}

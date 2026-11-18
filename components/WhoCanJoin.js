@@ -62,7 +62,7 @@ export default function WhoCanJoin() {
             <div>
               <p className="text-base font-bold text-white">নতুন হলেও চলবে 🧠</p>
               <p className="mt-0.5 text-sm text-slate-400">
-                আসল কাজ হলো একটি বাস্তব সমস্যা বেছে নেওয়া—বাকিটা AI শিখিয়ে দেবে।
+                আসল কাজ হলো একটা বাস্তব সমস্যা বাছা—বাকিটা AI-এর সাহায্যে শিখে নিতে পারো।
               </p>
             </div>
           </div>

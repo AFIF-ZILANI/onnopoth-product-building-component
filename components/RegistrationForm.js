@@ -186,7 +186,7 @@ export default function RegistrationForm() {
           index="07"
           eyebrow="Registration"
           title="এখুনি রেজিস্ট্রেশন করো"
-          subtitle={`রেজিস্ট্রেশন শেষ হবে ${dates.registrationDeadlineLabel}। ফর্ম পূরণ করে আইডিয়া জমা দিন—আমরা ইমেইলে নিশ্চিতকরণ পাঠাব।`}
+          subtitle={`রেজিস্ট্রেশন শেষ হবে ${dates.registrationDeadlineLabel}। ফর্ম পূরণ করে আইডিয়া জমা দিন—আমরা ইমেইলে কনফার্মেশন পাঠাব।`}
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
@@ -203,9 +203,9 @@ export default function RegistrationForm() {
               <ul className="space-y-3.5 text-sm text-slate-300">
                 {[
                   '২৫ নভেম্বর কনফার্মড তালিকা ঘোষণা',
-                  'ইমেইলে নিশ্চিতকরণ পাবেন',
-                  'একজন একটিমাত্র টিমে অংশ নিতে পারেন',
-                  'কোনো অভিজ্ঞতা আবশ্যক নয়',
+                  'ইমেইলে কনফার্মেশন পাবেন',
+                  'একজন শুধু একটিমাত্র টিমে অংশ নিতে পারেন',
+                  'কোনো অভিজ্ঞতা লাগবে না',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" strokeWidth={3} />
@@ -230,7 +230,7 @@ export default function RegistrationForm() {
               href="#contact"
               className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-bold text-slate-200 transition hover:border-indigo-400/40 hover:text-white"
             >
-              কোনো প্রশ্ন? যোগাযোগ করুন <ArrowRight className="h-4 w-4 text-indigo-300" />
+              প্রশ্ন আছে? যোগাযোগ করুন <ArrowRight className="h-4 w-4 text-indigo-300" />
             </a>
           </aside>
 
@@ -497,7 +497,7 @@ export default function RegistrationForm() {
               </FormGroup>
 
               {/* Group 03 — confirmation */}
-              <FormGroup index="03" title="নিশ্চিতকরণ" subtitle="একটি ছোট চেকবক্স বাকি।">
+              <FormGroup index="03" title="কনফার্মেশন" subtitle="বাকি আছে শুধু একটা চেকবক্স।">
                 <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300 transition hover:border-indigo-400/40">
                   <input
                     type="checkbox"
@@ -569,7 +569,7 @@ export default function RegistrationForm() {
                   <p className="font-bold">রেজিস্ট্রেশন সফল! 🎉</p>
                   <p className="mt-1 leading-relaxed">
                     আপনার রেজিস্ট্রেশন গ্রহণ করা হয়েছে। ২৫ নভেম্বর কনফার্মড তালিকা ঘোষণা করা হবে।
-                    ইনবক্সে (ও স্প্যাম ফোল্ডে) নিশ্চিতকরণ ইমেইল যাচাই করুন।
+                    ইনবক্সে কনফার্মেশন ইমেইল চেক করুন (স্প্যাম ফোল্ডও দেখে নিন)।
                   </p>
                 </div>
               </div>

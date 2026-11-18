@@ -109,8 +109,8 @@ export default function JudgingCriteria() {
             <div className="relative mt-7 flex items-start gap-2.5 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-400">
               <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-fuchsia-300" />
               <p>
-                সবচেয়ে বেশি ওজন রয়েছে <span className="font-semibold text-white">মৌলিকতা</span> ও{' '}
-                <span className="font-semibold text-white">কার্যকারিতায়</span>।
+                সবচেয়ে বেশি নম্বর আছে <span className="font-semibold text-white">মৌলিকতা</span> আর{' '}
+                <span className="font-semibold text-white">কাজের কার্যকারিতায়</span>।
               </p>
             </div>
           </div>

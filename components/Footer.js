@@ -67,16 +67,16 @@ export default function Footer() {
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Contact</h3>
             <ul className="mt-4 space-y-3">
               {contacts.map((person) => (
-                <li key={person.phone} className="text-sm text-slate-400">
+                <li key={person.name} className="text-sm text-slate-400">
                   <span className="block font-semibold text-slate-200">{person.name}</span>
-                  <span>{person.phone}</span>{' '}
+                  <span>{person.detail}</span>{' '}
                   <a
-                    href={person.whatsapp}
+                    href={person.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="ml-1 font-semibold text-indigo-300 hover:text-indigo-200"
                   >
-                    WhatsApp →
+                    {person.linkLabel} →
                   </a>
                 </li>
               ))}
