@@ -5,6 +5,7 @@ import Timeline from '@/components/Timeline';
 import HowItWorks from '@/components/HowItWorks';
 import JudgingCriteria from '@/components/JudgingCriteria';
 import Prizes from '@/components/Prizes';
+import IdCardSection from '@/components/IdCardSection';
 import RegistrationForm from '@/components/RegistrationForm';
 import FAQ from '@/components/FAQ';
 import Contact from '@/components/Contact';
@@ -20,6 +21,7 @@ export default function HomePage() {
       <HowItWorks />
       <JudgingCriteria />
       <Prizes />
+      <IdCardSection />
       <RegistrationForm />
       <FAQ />
       <Contact />

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, BookOpen, List } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
 import RulebookRenderer from '@/components/RulebookRenderer';
+import CompetitorIdCard from '@/components/CompetitorIdCard';
 import { rulebookIntro, rulebookSections } from '@/lib/rulebook';
 import { event } from '@/lib/config';
 
@@ -70,6 +71,14 @@ export default function RulebookPage() {
 
           <article className="print-document glass p-6 sm:p-10">
             <RulebookRenderer sections={rulebookSections} />
+
+            {/* Competitor identity card — included in the printed/PDF rulebook */}
+            <section className="mt-14 border-t border-white/10 pt-10">
+              <h2 className="mb-6 text-xl font-extrabold text-white sm:text-2xl">
+                Competitor ID Card
+              </h2>
+              <CompetitorIdCard />
+            </section>
 
             <div className="no-print mt-12 flex flex-col items-center justify-center gap-3 border-t border-white/10 pt-6 sm:flex-row">
               <Link href="/#register" className="btn-primary">
