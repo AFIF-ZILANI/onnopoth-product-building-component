@@ -6,6 +6,8 @@
 import nodemailer from 'nodemailer';
 import { getCookieValue, isAdminSession, createApprovalToken } from '@/lib/admin';
 import { event, socialLinks } from '@/lib/config';
+import { eventIcs } from '@/lib/calendar';
+import { clearRecordsCache } from '@/lib/gmail-store';
 
 export const runtime = 'nodejs';
 
@@ -101,7 +103,38 @@ export async function POST(req) {
         : declineEmail(name, productName),
     };
 
-    await transporter.sendMail(mail);
+    await transporter.sendMail({
+      ...mail,
+      attachments: [
+        {
+          filename: 'onnopoth-competition.ics',
+          content: eventIcs(),
+          contentType: 'text/calendar',
+        },
+      ],
+    });
+
+    // Keep a machine-readable decision record in the organizer's own inbox so
+    // the status checker and confirmed list can query it later.
+    await transporter.sendMail({
+      from: `"${event.shortName}" <${GMAIL_USER}>`,
+      to: process.env.RECEIVER_EMAIL || GMAIL_USER,
+      subject: `Decision recorded: ${decision} – ${productName}`,
+      headers: {
+        'X-OnnoPoth-Approval': Buffer.from(
+          JSON.stringify({
+            email,
+            name,
+            productName,
+            decision,
+            decidedAt: new Date().toISOString(),
+          })
+        ).toString('base64'),
+      },
+      text: `Decision recorded: ${decision}\nName: ${name}\nEmail: ${email}\nProduct: ${productName}`,
+    });
+
+    clearRecordsCache();
     return Response.json({ ok: true, decision });
   } catch (error) {
     console.error('Admin decision failed:', error.message);

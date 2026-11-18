@@ -25,6 +25,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState('');
   const [busy, setBusy] = useState('');
+  const [reminding, setReminding] = useState(false);
   const [toast, setToast] = useState('');
 
   async function loadIdeas() {
@@ -70,6 +71,21 @@ export default function AdminPage() {
       setLoginError(error.message);
     } finally {
       setLoggingIn(false);
+    }
+  }
+
+  async function sendReminders() {
+    setReminding(true);
+    setToast('');
+    try {
+      const res = await fetch('/api/admin/remind', { method: 'POST' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'ব্যর্থ।');
+      setToast(`${data.sent} জনকে রিমাইন্ডার ইমেইল পাঠানো হয়েছে।`);
+    } catch (error) {
+      setToast(`সমস্যা: ${error.message}`);
+    } finally {
+      setReminding(false);
     }
   }
 
@@ -179,7 +195,11 @@ export default function AdminPage() {
           <p className="text-sm text-slate-400">
             মোট <span className="font-bold text-white">{ideas.length}</span> টি অপেক্ষমাণ আইডিয়া
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <button onClick={sendReminders} disabled={reminding} className="btn-secondary !px-4 !py-2 !text-xs">
+              <Mail className={`h-4 w-4 ${reminding ? 'animate-pulse' : ''}`} />
+              {reminding ? 'পাঠানো হচ্ছে…' : 'রিমাইন্ডার পাঠান'}
+            </button>
             <button onClick={loadIdeas} disabled={loading} className="btn-secondary !px-4 !py-2 !text-xs">
               <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> রিফ্রেশ
             </button>

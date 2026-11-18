@@ -13,6 +13,7 @@
 
 import nodemailer from 'nodemailer';
 import { isRegistrationOpen, event } from '@/lib/config';
+import { eventIcs } from '@/lib/calendar';
 
 // Force the Node.js runtime (Nodemailer needs Node APIs, not Edge).
 export const runtime = 'nodejs';
@@ -320,6 +321,13 @@ export async function POST(req) {
         to: data.email,
         subject: 'আপনার রেজিস্ট্রেশন গ্রহণ করা হয়েছে',
         html: buildConfirmationEmail(leaderName),
+        attachments: [
+          {
+            filename: 'onnopoth-competition.ics',
+            content: eventIcs(),
+            contentType: 'text/calendar',
+          },
+        ],
       });
     } catch (confirmError) {
       console.warn('Confirmation email failed (registration still saved):', confirmError.message);
