@@ -34,7 +34,7 @@ export default function JudgingCriteria() {
     .join(', ');
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section data-reveal className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           index="05"

@@ -4,7 +4,7 @@ import CompetitorIdCard from './CompetitorIdCard';
 /** Website section showing the competitor identity card. */
 export default function IdCardSection() {
   return (
-    <section id="id-card" className="relative py-20 sm:py-28">
+    <section data-reveal id="id-card" className="relative py-20 sm:py-28">
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeading

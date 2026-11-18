@@ -1,6 +1,7 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ScrollReveal from '@/components/ScrollReveal';
 import { event, dates, socialLinks } from '@/lib/config';
 
 /**
@@ -88,9 +89,11 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
         />
+        <a href="#main" className="skip-link">মূল কনটেন্টে যান</a>
         <Navbar />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );

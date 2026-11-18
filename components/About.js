@@ -32,7 +32,7 @@ const features = [
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 sm:py-32">
+    <section data-reveal id="about" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           {/* Left — statement */}

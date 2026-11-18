@@ -179,7 +179,7 @@ export default function RegistrationForm() {
   const closed = registrationOpen === false;
 
   return (
-    <section id="register" className="relative py-24 sm:py-32">
+    <section data-reveal id="register" className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute left-1/4 top-0 h-96 w-[40rem] rounded-full bg-indigo-600/10 blur-[120px]" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading

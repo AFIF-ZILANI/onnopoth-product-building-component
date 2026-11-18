@@ -35,7 +35,7 @@ const themes = {
 
 export default function Prizes() {
   return (
-    <section className="relative py-20 sm:py-28">
+    <section data-reveal className="relative py-20 sm:py-28">
       {/* ambient glow behind the cards */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.06] blur-[120px]" />
 

@@ -12,7 +12,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section data-reveal className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
           {/* Left — heading + help card */}

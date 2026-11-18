@@ -8,6 +8,7 @@ import Prizes from '@/components/Prizes';
 import IdCardSection from '@/components/IdCardSection';
 import RegistrationForm from '@/components/RegistrationForm';
 import FAQ from '@/components/FAQ';
+import JudgesSection from '@/components/JudgesSection';
 import Contact from '@/components/Contact';
 
 /** Home — a single scrolling page made of independent sections. */
@@ -24,6 +25,7 @@ export default function HomePage() {
       <IdCardSection />
       <RegistrationForm />
       <FAQ />
+      <JudgesSection />
       <Contact />
     </>
   );

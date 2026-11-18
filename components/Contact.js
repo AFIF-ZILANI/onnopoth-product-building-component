@@ -5,7 +5,7 @@ import { contacts } from '@/lib/config';
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-24 sm:py-32">
+    <section data-reveal id="contact" className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-indigo-600/10 to-transparent" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/10 blur-[120px]" />
 

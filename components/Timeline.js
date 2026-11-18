@@ -43,7 +43,7 @@ const items = [
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="relative py-24 sm:py-32">
+    <section data-reveal id="timeline" className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-indigo-500/25 to-transparent" />
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
