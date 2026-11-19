@@ -80,6 +80,7 @@ export default function RegistrationForm() {
   const [status, setStatus] = useState(null);
   const [serverMessage, setServerMessage] = useState('');
   const [registrationOpen, setRegistrationOpen] = useState(null);
+  const [emailed, setEmailed] = useState(true);
 
   // Client-only check after mount → no hydration mismatch.
   useEffect(() => {
@@ -165,6 +166,7 @@ export default function RegistrationForm() {
 
       if (res.ok) {
         setStatus('success');
+        setEmailed(data.emailed !== false);
         setForm(EMPTY_FORM);
       } else {
         setStatus('error');
@@ -414,7 +416,10 @@ export default function RegistrationForm() {
                 <div>
                   <p className="font-semibold">রেজিস্ট্রেশন সফল হয়েছে</p>
                   <p className="mt-1 leading-relaxed">
-                    ২৫ নভেম্বর কনফার্মড তালিকা ঘোষণা করা হবে। ইনবক্সে কনফার্মেশন ইমেইল দেখে নাও (স্প্যাম ফোল্ডারও)।
+                    ২৫ নভেম্বর কনফার্মড তালিকা ঘোষণা করা হবে।{' '}
+                    {emailed
+                      ? 'ইনবক্সে কনফার্মেশন ইমেইল দেখে নাও (স্প্যাম ফোল্ডারও)।'
+                      : 'যেকোনো সময় স্ট্যাটাস পেজে ইমেইল ও WhatsApp নম্বর দিয়ে অবস্থা দেখতে পারবে।'}
                   </p>
                 </div>
               </div>

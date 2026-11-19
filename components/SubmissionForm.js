@@ -33,7 +33,6 @@ const EMPTY = {
   website: '',
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_RE = /^https?:\/\/[^\s]+$/i;
 const GITHUB_RE = /^https?:\/\/(www\.)?github\.com\/[^\s/]+\/[^\s/]+/i;
 
@@ -66,7 +65,23 @@ export default function SubmissionForm() {
     }
     fetch(`/api/submit/access?token=${encodeURIComponent(t)}`)
       .then((res) => res.json().catch(() => ({ allowed: false })))
-      .then((data) => setAccess(data.allowed ? data : { allowed: false }))
+      .then((data) => {
+        if (!data.allowed) return setAccess({ allowed: false });
+        setAccess(data);
+        const prev = data.submitted || {};
+        setForm((f) => ({
+          ...f,
+          name: prev.name || data.name || '',
+          email: data.email || '',
+          productName: prev.productName || data.productName || '',
+          platform: prev.platform || f.platform,
+          githubUrl: prev.githubUrl || '',
+          liveUrl: prev.liveUrl || '',
+          demoUrl: prev.demoUrl || '',
+          aiTools: prev.aiTools || '',
+          timeSpent: prev.timeSpent || '',
+        }));
+      })
       .catch(() => setAccess({ allowed: false }));
   }, []);
 
@@ -79,7 +94,6 @@ export default function SubmissionForm() {
     const e = {};
     const needsGithub = form.platform === 'github';
     if (!form.name.trim()) e.name = 'নাম বা টিমের নাম লিখুন।';
-    if (!EMAIL_RE.test(form.email.trim())) e.email = 'সঠিক ইমেইল ঠিকানা দিন।';
     if (!form.productName.trim()) e.productName = 'প্রোডাক্টের নাম লিখুন।';
     if (needsGithub && !GITHUB_RE.test(form.githubUrl.trim())) {
       e.githubUrl = 'সঠিক GitHub repository লিংক দিন।';
@@ -113,7 +127,7 @@ export default function SubmissionForm() {
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
         setStatus('success');
-        setForm(EMPTY);
+        setAccess((a) => ({ ...a, submitted: { at: new Date().toISOString() } }));
       } else {
         setStatus('error');
         setMessage(data.error || 'কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।');
@@ -201,6 +215,12 @@ export default function SubmissionForm() {
           </aside>
 
           <form onSubmit={handleSubmit} noValidate className="glass p-6 sm:p-9">
+            {access.submitted && status !== 'success' && (
+              <div className="mb-7 flex items-start gap-3 rounded-xl border border-line bg-paper p-4 text-sm text-ink-2">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-700" />
+                আগেই জমা দেওয়া হয়েছে। নিচের তথ্য বদলে আবার জমা দিলে আগের সাবমিশন আপডেট হয়ে যাবে।
+              </div>
+            )}
             {closed && (
               <div className="mb-7 flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
                 <Lock className="h-5 w-5 shrink-0" /> জমা দেওয়ার সময় শেষ হয়ে গেছে।
@@ -242,10 +262,10 @@ export default function SubmissionForm() {
                   <ErrorText message={errors.name} />
                 </div>
                 <div>
-                  <label className="field-label" htmlFor="s-email">ইমেইল *</label>
+                  <label className="field-label" htmlFor="s-email">ইমেইল (রেজিস্ট্রেশনের)</label>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
-                    <input id="s-email" type="email" className="field-input !pl-11" placeholder="you@example.com" value={form.email} onChange={(e) => set('email', e.target.value)} />
+                    <input id="s-email" type="email" className="field-input !pl-11 bg-paper text-ink-3" value={form.email} readOnly aria-readonly="true" />
                   </div>
                   <ErrorText message={errors.email} />
                 </div>
