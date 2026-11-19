@@ -200,7 +200,13 @@ section[id] {
   .print-document a { color: #1d4ed8 !important; text-decoration: underline; }
   .print-document section { break-inside: avoid; page-break-inside: avoid; }
   .print-document h2 { break-after: avoid; page-break-after: avoid; }
-  .id-card { box-shadow: none !important; break-inside: avoid; page-break-inside: avoid; }
+  .id-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 /* Hide the honeypot from humans (and from layout) but keep it in the DOM. */
@@ -231,4 +237,32 @@ section[id] {
 /* FAQ answers ease in when opened. */
 details[open] .faq-answer {
   animation: rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Pointer tilt for the ID card on the home page. */
+.tilt-inner {
+  position: relative;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.tilt-inner[data-active] {
+  transition-duration: 0.12s;
+}
+.tilt-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tilt-inner[data-active]::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tilt-inner { transform: none !important; }
+  .tilt-inner::after { display: none; }
 }

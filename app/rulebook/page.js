@@ -49,7 +49,7 @@ export default function RulebookPage() {
         </div>
 
         {/* Content + sticky table of contents */}
-        <div className="grid items-start gap-10 lg:grid-cols-[240px_minmax(0,1fr)]">
+        <div className="grid items-start gap-10 lg:grid-cols-[240px_minmax(0,1fr)] print:block">
           <aside className="no-print hidden lg:block">
             <nav className="glass sticky top-24 p-5">
               <p className="mb-4 flex items-center gap-2 text-sm font-semibold text-ink">

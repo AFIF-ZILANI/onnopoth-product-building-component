@@ -1,5 +1,5 @@
 /** The official OnnoPoth mark (same paths as public/logo.svg), drawn in currentColor for light surfaces. */
-export function Mark({ className = 'h-8 w-8' }) {
+export function Mark({ className = 'h-8 w-8', dot = '#2f5bea' }) {
   return (
     <svg viewBox="150 140 230 270" fill="none" aria-hidden="true" className={className}>
       <path d="M275 186 L207 255" stroke="currentColor" strokeWidth="26" strokeLinecap="round" strokeLinejoin="round" />
@@ -10,7 +10,7 @@ export function Mark({ className = 'h-8 w-8' }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="282" cy="175" r="19" fill="#2f5bea" />
+      <circle cx="282" cy="175" r="19" fill={dot} />
     </svg>
   );
 }
