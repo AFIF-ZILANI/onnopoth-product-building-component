@@ -16,12 +16,13 @@ import {
  User,
 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
-import { dates, isSubmissionOpen, event } from '@/lib/config';
+import { dates, isSubmissionOpen, event, buildPlatforms } from '@/lib/config';
 
 const EMPTY = {
   name: '',
   email: '',
   productName: '',
+  platform: 'github',
   githubUrl: '',
   liveUrl: '',
   demoUrl: '',
@@ -76,14 +77,17 @@ export default function SubmissionForm() {
 
   function validate() {
     const e = {};
+    const needsGithub = form.platform === 'github';
     if (!form.name.trim()) e.name = 'নাম বা টিমের নাম লিখুন।';
     if (!EMAIL_RE.test(form.email.trim())) e.email = 'সঠিক ইমেইল ঠিকানা দিন।';
     if (!form.productName.trim()) e.productName = 'প্রোডাক্টের নাম লিখুন।';
-    if (!GITHUB_RE.test(form.githubUrl.trim())) e.githubUrl = 'সঠিক GitHub repository লিংক দিন।';
-    if (!URL_RE.test(form.liveUrl.trim())) e.liveUrl = 'সঠিক Live/Vercel লিংক দিন।';
+    if (needsGithub && !GITHUB_RE.test(form.githubUrl.trim())) {
+      e.githubUrl = 'সঠিক GitHub repository লিংক দিন।';
+    }
+    if (!URL_RE.test(form.liveUrl.trim())) e.liveUrl = 'সঠিক লাইভ লিংক দিন (Vercel / Lovable / v0)।';
     if (form.demoUrl.trim() && !URL_RE.test(form.demoUrl.trim())) e.demoUrl = 'সঠিক ডেমো ভিডিও লিংক দিন।';
     if (!form.aiTools.trim()) e.aiTools = 'কোন AI টুল কীভাবে ব্যবহার করেছেন তা লিখুন।';
-    if (!form.readme) e.readme = 'README যোগ করার নিশ্চিতকরণ আবশ্যক।';
+    if (needsGithub && !form.readme) e.readme = 'README যোগ করার নিশ্চিতকরণ আবশ্যক।';
     if (!form.agree) e.agree = 'নিয়ম মেনে জমা দেওয়ার নিশ্চিতকরণ আবশ্যক।';
     return e;
   }
@@ -174,9 +178,9 @@ export default function SubmissionForm() {
               </p>
               <ul className="space-y-3 text-sm text-slate-300">
                 {[
-                  'GitHub repo লিংক (Public)',
-                  'Vercel-এ ডিপ্লয় করা Live লিংক',
-                  'README ফাইল',
+                  ...(form.platform === 'github' ? ['GitHub repo লিংক (Public)', 'README ফাইল'] : []),
+                  'লাইভ লিংক (Vercel / Lovable / v0)',
+                  'AI টুল ব্যবহারের বিবরণ',
                   'ডেমো ভিডিও (ঐচ্ছিক)',
                 ].map((item, i) => (
                   <li key={item} className="flex items-start gap-3">
@@ -203,6 +207,30 @@ export default function SubmissionForm() {
                 <Lock className="h-5 w-5 shrink-0" /> জমা দেওয়ার সময় শেষ হয়ে গেছে।
               </div>
             )}
+
+            <div>
+              <p className="field-label">কী দিয়ে বানিয়েছেন? *</p>
+              <div className="grid grid-cols-3 gap-2">
+                {buildPlatforms.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => set('platform', p.id)}
+                    aria-pressed={form.platform === p.id}
+                    className={`rounded-xl border px-2 py-3 text-center text-[11px] font-bold transition sm:text-xs ${
+                      form.platform === p.id
+                        ? 'border-indigo-400 bg-indigo-500/20 text-white shadow-glow'
+                        : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/25'
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-slate-500">
+                {buildPlatforms.find((p) => p.id === form.platform)?.hint}
+              </p>
+            </div>
 
             <div className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
@@ -233,17 +261,19 @@ export default function SubmissionForm() {
                 <ErrorText message={errors.productName} />
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label className="field-label" htmlFor="s-github">GitHub repository *</label>
-                  <div className="relative">
-                    <GitBranch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-                    <input id="s-github" className="field-input !pl-11" placeholder="github.com/user/repo" value={form.githubUrl} onChange={(e) => set('githubUrl', e.target.value)} />
+              <div className={`grid gap-6 ${form.platform === 'github' ? 'sm:grid-cols-2' : ''}`}>
+                {form.platform === 'github' && (
+                  <div>
+                    <label className="field-label" htmlFor="s-github">GitHub repository *</label>
+                    <div className="relative">
+                      <GitBranch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                      <input id="s-github" className="field-input !pl-11" placeholder="github.com/user/repo" value={form.githubUrl} onChange={(e) => set('githubUrl', e.target.value)} />
+                    </div>
+                    <ErrorText message={errors.githubUrl} />
                   </div>
-                  <ErrorText message={errors.githubUrl} />
-                </div>
+                )}
                 <div>
-                  <label className="field-label" htmlFor="s-live">Live / Vercel link *</label>
+                  <label className="field-label" htmlFor="s-live">লাইভ লিংক * (Vercel / Lovable / v0)</label>
                   <div className="relative">
                     <ExternalLink className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
                     <input id="s-live" className="field-input !pl-11" placeholder="https://your-app.vercel.app" value={form.liveUrl} onChange={(e) => set('liveUrl', e.target.value)} />
@@ -278,11 +308,15 @@ export default function SubmissionForm() {
               </div>
 
               <div className="space-y-3">
-                <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300">
-                  <input type="checkbox" checked={form.readme} onChange={(e) => set('readme', e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-indigo-500" />
-                  আমি GitHub রিপোজিটরিতে README ফাইল যোগ করেছি *
-                </label>
-                <ErrorText message={errors.readme} />
+                {form.platform === 'github' && (
+                  <>
+                    <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300">
+                      <input type="checkbox" checked={form.readme} onChange={(e) => set('readme', e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-indigo-500" />
+                      আমি GitHub রিপোজিটরিতে README ফাইল যোগ করেছি *
+                    </label>
+                    <ErrorText message={errors.readme} />
+                  </>
+                )}
                 <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300">
                   <input type="checkbox" checked={form.agree} onChange={(e) => set('agree', e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-indigo-500" />
                   আমি সব নিয়ম মেনে প্রোডাক্ট জমা দিচ্ছি *

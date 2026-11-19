@@ -53,18 +53,22 @@ const GITHUB_RE = /^https?:\/\/(www\.)?github\.com\/[^\s/]+\/[^\s/]+/i;
 
 function validate(data) {
   const errors = {};
+  const needsGithub = data.platform === 'github';
+  if (!['github', 'lovable', 'v0'].includes(data.platform)) {
+    errors.platform = 'বিল্ড প্ল্যাটফর্ম নির্বাচন করুন।';
+  }
   if (!clean(data.name)) errors.name = 'নাম বা টিমের নাম লিখুন।';
   if (!EMAIL_RE.test(clean(data.email))) errors.email = 'সঠিক ইমেইল ঠিকানা দিন।';
   if (!clean(data.productName)) errors.productName = 'প্রোডাক্টের নাম লিখুন।';
-  if (!GITHUB_RE.test(clean(data.githubUrl))) {
+  if (needsGithub && !GITHUB_RE.test(clean(data.githubUrl))) {
     errors.githubUrl = 'সঠিক GitHub repository লিংক দিন (github.com/...)।';
   }
-  if (!URL_RE.test(clean(data.liveUrl))) errors.liveUrl = 'সঠিক Live/Vercel লিংক দিন (https://...)।';
+  if (!URL_RE.test(clean(data.liveUrl))) errors.liveUrl = 'সঠিক লাইভ লিংক দিন (https://...)।';
   if (clean(data.demoUrl) && !URL_RE.test(clean(data.demoUrl))) {
     errors.demoUrl = 'সঠিক ডেমো ভিডিও লিংক দিন।';
   }
   if (!clean(data.aiTools)) errors.aiTools = 'কোন AI টুল কীভাবে ব্যবহার করেছেন তা লিখুন।';
-  if (data.readme !== true) errors.readme = 'README যোগ করার নিশ্চিতকরণ আবশ্যক।';
+  if (needsGithub && data.readme !== true) errors.readme = 'README যোগ করার নিশ্চিতকরণ আবশ্যক।';
   if (data.agree !== true) errors.agree = 'নিয়ম মেনে জমা দেওয়ার নিশ্চিতকরণ আবশ্যক।';
   return errors;
 }
@@ -88,11 +92,12 @@ function organizerEmail(d) {
         ${row('নাম / টিম', esc(d.name))}
         ${row('প্রোডাক্ট', esc(d.productName))}
         ${row('ইমেইল', esc(d.email))}
-        ${row('GitHub', `<a href="${esc(d.githubUrl)}">${esc(d.githubUrl)}</a>`)}
+        ${row('প্ল্যাটফর্ম', esc(d.platform))}
+        ${d.githubUrl ? row('GitHub', `<a href="${esc(d.githubUrl)}">${esc(d.githubUrl)}</a>`) : ''}
         ${row('Live link', `<a href="${esc(d.liveUrl)}">${esc(d.liveUrl)}</a>`)}
         ${row('ডেমো ভিডিও', d.demoUrl ? `<a href="${esc(d.demoUrl)}">${esc(d.demoUrl)}</a>` : '—')}
         ${row('AI টুল ব্যবহার', esc(d.aiTools))}
-        ${row('README', d.readme ? 'যোগ করা হয়েছে' : 'না')}
+        ${d.platform === 'github' ? row('README', d.readme ? 'যোগ করা হয়েছে' : 'না') : ''}
         ${row('মোট সময়', esc(d.timeSpent) || '—')}
       </table>
     </div>
@@ -154,6 +159,7 @@ export async function POST(req) {
       name: clean(body.name),
       email: clean(body.email),
       productName: clean(body.productName),
+      platform: clean(body.platform) || 'github',
       githubUrl: clean(body.githubUrl),
       liveUrl: clean(body.liveUrl),
       demoUrl: clean(body.demoUrl),
