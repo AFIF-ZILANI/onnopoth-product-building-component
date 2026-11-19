@@ -1,15 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" fill="none">
   <title>MIU — Learn Grow Succeed</title>
-  <!-- M -->
-  <path d="M72 196V104L132 164L192 104V196" stroke="#0B1B33" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- i -->
-  <path d="M245 116V196" stroke="#0B1B33" stroke-width="25" stroke-linecap="round"/>
-  <circle cx="245" cy="82" r="15" fill="#0A66FF"/>
-  <!-- u -->
-  <path d="M305 116V164C305 193 323 203 348 203C373 203 391 193 391 164V116" stroke="#0B1B33" stroke-width="25" stroke-linecap="round"/>
-  <!-- growth arrow -->
-  <path d="M300 228C350 232 405 210 447 165" stroke="#0A66FF" stroke-width="16" stroke-linecap="round"/>
-  <path d="M447 165L412 168L437 193Z" fill="#0A66FF"/>
+
+  <!-- MIU wordmark -->
+  <g stroke="#0B1B33" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+    <!-- M: left stem, V, short up-right arm -->
+    <path d="M88 182V92L134 148L180 96L214 132"/>
+    <!-- i stem -->
+    <path d="M252 112V182"/>
+    <!-- u -->
+    <path d="M306 114V150C306 176 322 186 346 186C370 186 386 176 386 150V114"/>
+  </g>
+  <!-- blue dot on i -->
+  <circle cx="252" cy="82" r="14" fill="#0066FF"/>
+
+  <!-- upward growth arrow -->
+  <path d="M306 208C356 214 410 188 442 138" stroke="#0066FF" stroke-width="15" stroke-linecap="round"/>
+  <path d="M442 138L408 146L436 172Z" fill="#0066FF"/>
+
   <!-- tagline -->
-  <text x="300" y="272" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" letter-spacing="2" fill="#0B1B33">Learn Grow Succeed</text>
+  <text x="280" y="268" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" letter-spacing="3" fill="#0B1B33">Learn Grow Succeed</text>
 </svg>
