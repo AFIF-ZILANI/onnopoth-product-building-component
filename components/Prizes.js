@@ -156,7 +156,7 @@ export default function Prizes() {
           <div className="relative flex items-center gap-5">
             <div className="shrink-0 rounded-2xl bg-white p-3 shadow-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={giftSponsor.logo} alt={`${giftSponsor.name} logo`} className="h-12 w-auto sm:h-14" />
+              <img src={giftSponsor.logo} alt={`${giftSponsor.name} logo`} className="h-14 w-auto sm:h-16" />
             </div>
             <div>
               <p className="flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[0.2em] text-amber-300">
