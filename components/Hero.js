@@ -186,7 +186,7 @@ export default function Hero() {
               {/* Organizer strip */}
               <div className="mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo-light.svg" alt="OnnoPoth" className="h-5 w-auto" />
+                <img src="/logo.svg" alt="OnnoPoth logo" className="h-7 w-7 rounded-md" />
                 <div>
                   <p className="text-xs font-bold text-white">Organized by OnnoPoth</p>
                   <p className="text-[11px] text-slate-500">আয়োজক কমিটি</p>

@@ -25,7 +25,7 @@ export default function CompetitorIdCard({ data = idCardSample }) {
       {/* Header — branding only, no extra identity fields */}
       <div className="id-card-header flex flex-wrap items-center gap-4 border-b border-white/10 px-6 py-5 sm:px-9">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-light.svg" alt="OnnoPoth" className="h-6 w-auto shrink-0" />
+        <img src="/logo.svg" alt="OnnoPoth logo" className="h-10 w-10 shrink-0 rounded-lg" />
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-indigo-300">
             OnnoPoth

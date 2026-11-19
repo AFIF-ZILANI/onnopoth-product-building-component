@@ -38,13 +38,19 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand */}
-        <a href="/#home" className="group flex items-center" aria-label="OnnoPoth — Home">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-light.svg"
-            alt="OnnoPoth"
-            className="h-6 w-auto transition group-hover:opacity-80 sm:h-7"
-          />
+        <a href="/#home" className="group flex items-center gap-2.5" aria-label="OnnoPoth — Home">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-navy-800 shadow-glow ring-1 ring-white/10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="OnnoPoth logo" className="h-7 w-7" />
+          </span>
+          <span className="leading-tight">
+            <span className="block text-sm font-extrabold tracking-tight text-white sm:text-base">
+              OnnoPoth
+            </span>
+            <span className="block text-[10px] font-medium text-indigo-300 sm:text-[11px]">
+              Product Build Competition
+            </span>
+          </span>
         </a>
 
         {/* Desktop links */}
