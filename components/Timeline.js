@@ -1,10 +1,11 @@
 import { CalendarRange, CheckCircle2, ListChecks, Megaphone, Cpu, Trophy } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { dates } from '@/lib/config';
 
 const items = [
   {
     icon: CalendarRange,
-    date: '২০–২৩ নভেম্বর',
+    date: dates.registrationWindowLabel,
     title: 'রেজিস্ট্রেশন ও আইডিয়া জমা',
     text: 'ফর্ম পূরণ করে প্রোডাক্টের নাম ও আইডিয়া জমা দিন। টিম হলে সবার নাম ও টিম লিডার উল্লেখ করুন।',
   },

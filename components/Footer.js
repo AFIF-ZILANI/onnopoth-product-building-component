@@ -30,12 +30,9 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-navy-800 shadow-glow ring-1 ring-white/10">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.svg" alt="OnnoPoth logo" className="h-7 w-7" />
-              </span>
-              <span className="text-lg font-extrabold text-white">{event.organizer}</span>
+            <div className="flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-light.svg" alt="OnnoPoth" className="h-7 w-auto" />
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
               {event.tagline}। {event.organizer} — একটি উন্মুক্ত লার্নিং কমিউনিটি।

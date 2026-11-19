@@ -265,6 +265,11 @@ section[id] {
   .id-card-label {
     color: #475569 !important;
   }
+
+  /* Make the white wordmark legible on the white printed card. */
+  .id-card img {
+    filter: brightness(0);
+  }
 }
 
 /* Hide the honeypot from humans (and from layout) but keep it in the DOM. */

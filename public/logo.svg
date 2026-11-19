@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 56" fill="none">
   <title>OnnoPoth</title>
-  <!-- White open loop + diagonal stroke, with the signature blue dot -->
-  <path d="M275 186 L207 255" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M207 255 C185 282 190 332 225 362 C265 395 322 377 342 332 C354 302 341 270 312 249" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="282" cy="175" r="17" fill="#8FB2FF"/>
+  <!-- signature droplet with blue dot -->
+  <path d="M22 12C22 12 9 26 9 35a13 13 0 0 0 26 0c0-9-13-23-13-23Z" stroke="#14264A" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="22" cy="9" r="4.5" fill="#3B82F6"/>
+  <!-- wordmark -->
+  <text x="48" y="42" font-family="'Arial Black',Arial,sans-serif" font-size="32" font-weight="900" letter-spacing="2.5" fill="#14264A">ONNOPOTH</text>
 </svg>

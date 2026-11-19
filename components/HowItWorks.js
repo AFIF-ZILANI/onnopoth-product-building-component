@@ -7,12 +7,13 @@ import {
   Send,
 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { dates } from '@/lib/config';
 
 const steps = [
   {
     icon: ClipboardList,
     title: 'রেজিস্ট্রেশন ও আইডিয়া',
-    text: 'ফর্ম পূরণ করে প্রোডাক্টের নাম ও আইডিয়া জমা দিন (২০–২৩ নভেম্বর)।',
+    text: `ফর্ম পূরণ করে প্রোডাক্টের নাম ও আইডিয়া জমা দিন (${dates.registrationWindowLabel})।`,
   },
   {
     icon: BadgeCheck,

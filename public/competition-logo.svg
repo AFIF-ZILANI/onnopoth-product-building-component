@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" fill="none">
+  <title>Product Building Competition (Using AI) — OnnoPoth</title>
+
+  <!-- Top bar: brand + tag -->
+  <path d="M56 44C56 44 40 62 40 74a16 16 0 0 0 32 0c0-12-16-30-16-30Z" stroke="#14264A" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="56" cy="40" r="7" fill="#3B82F6"/>
+  <text x="90" y="86" font-family="'Arial Black',Arial,sans-serif" font-size="52" font-weight="900" letter-spacing="4" fill="#14264A">ONNOPOTH</text>
+  <rect x="1130" y="46" width="230" height="66" rx="33" fill="#FBBF24" stroke="#14264A" stroke-width="7"/>
+  <text x="1245" y="92" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="32" font-weight="900" fill="#14264A">USING AI</text>
+
+  <!-- Seven letter tiles -->
+  <g transform="rotate(-5 155 255)">
+    <rect x="85" y="192" width="150" height="150" rx="28" fill="#0B1C3A"/>
+    <rect x="80" y="180" width="150" height="150" rx="28" fill="#2563EB" stroke="#14264A" stroke-width="7"/>
+    <path d="M104 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".35"/>
+    <text x="155" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#fff">P</text>
+  </g>
+  <g transform="rotate(4 330 255)">
+    <rect x="260" y="192" width="150" height="150" rx="28" fill="#B45309"/>
+    <rect x="255" y="180" width="150" height="150" rx="28" fill="#F59E0B" stroke="#14264A" stroke-width="7"/>
+    <path d="M279 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".35"/>
+    <text x="330" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#14264A">R</text>
+  </g>
+  <g transform="rotate(-4 505 255)">
+    <rect x="435" y="192" width="150" height="150" rx="28" fill="#0E7490"/>
+    <rect x="430" y="180" width="150" height="150" rx="28" fill="#22D3EE" stroke="#14264A" stroke-width="7"/>
+    <path d="M454 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".4"/>
+    <text x="505" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#14264A">O</text>
+  </g>
+  <g transform="rotate(3 680 255)">
+    <rect x="610" y="192" width="150" height="150" rx="28" fill="#070D24"/>
+    <rect x="605" y="180" width="150" height="150" rx="28" fill="#14264A" stroke="#0B1C3A" stroke-width="7"/>
+    <path d="M629 210q28-18 62-6" stroke="#94A3B8" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+    <text x="680" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#FBBF24">D</text>
+  </g>
+  <g transform="rotate(-5 855 255)">
+    <rect x="785" y="192" width="150" height="150" rx="28" fill="#1D4ED8"/>
+    <rect x="780" y="180" width="150" height="150" rx="28" fill="#2563EB" stroke="#14264A" stroke-width="7"/>
+    <path d="M804 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".35"/>
+    <text x="855" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#fff">U</text>
+  </g>
+  <g transform="rotate(4 1030 255)">
+    <rect x="960" y="192" width="150" height="150" rx="28" fill="#B45309"/>
+    <rect x="955" y="180" width="150" height="150" rx="28" fill="#F59E0B" stroke="#14264A" stroke-width="7"/>
+    <path d="M979 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".35"/>
+    <text x="1030" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#14264A">C</text>
+  </g>
+  <g transform="rotate(-4 1205 255)">
+    <rect x="1135" y="192" width="150" height="150" rx="28" fill="#0E7490"/>
+    <rect x="1130" y="180" width="150" height="150" rx="28" fill="#22D3EE" stroke="#14264A" stroke-width="7"/>
+    <path d="M1154 210q28-18 62-6" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".4"/>
+    <text x="1205" y="292" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="92" font-weight="900" fill="#14264A">T</text>
+  </g>
+
+  <!-- Dotted separator -->
+  <line x1="120" y1="386" x2="1280" y2="386" stroke="#94A3B8" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 20"/>
+
+  <!-- BUILDING bar -->
+  <rect x="60" y="410" width="1280" height="150" rx="42" fill="#0B1C3A"/>
+  <text x="700" y="522" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="106" font-weight="900" letter-spacing="9" fill="#FBBF24">BUILDING</text>
+
+  <!-- COMPETITION -->
+  <text x="640" y="720" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="104" font-weight="900" letter-spacing="3" fill="#2563EB" stroke="#14264A" stroke-width="14" paint-order="stroke">COMPETITION</text>
+
+  <!-- Year badge -->
+  <circle cx="1245" cy="700" r="92" fill="#FBBF24" stroke="#14264A" stroke-width="12"/>
+  <text x="1245" y="730" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="58" font-weight="900" fill="#14264A">2026</text>
+</svg>

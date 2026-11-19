@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import Countdown from './Countdown';
 import ShareButtons from './ShareButtons';
-import { event, socialLinks } from '@/lib/config';
+import { event, dates, socialLinks } from '@/lib/config';
 
 /** Small row inside the event-pass card. */
 function DetailRow({ icon: Icon, label, value }) {
@@ -54,18 +54,20 @@ export default function Hero() {
                 Registration Open
               </span>
               <span className="badge">
-                <CalendarDays className="h-3.5 w-3.5 text-indigo-300" /> 20–23 Nov
+                <CalendarDays className="h-3.5 w-3.5 text-indigo-300" /> {dates.registrationWindowLabelEn}
               </span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-[clamp(2.8rem,8vw,5.4rem)] font-extrabold leading-[0.98] tracking-[-0.045em] text-white">
-              <span className="block">Product Building</span>
-              <span className="gradient-text block pb-1">Competition</span>
-              <span className="mt-2 block text-[0.42em] font-semibold tracking-[-0.01em] text-slate-400">
-                (Using AI)
-              </span>
-            </h1>
+            {/* Headline — official competition logo */}
+            <h1 className="sr-only">{event.name}</h1>
+            <div className="mx-auto max-w-2xl lg:mx-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/competition-logo-dark.svg"
+                alt={`${event.name} — ${event.organizer}`}
+                className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+              />
+            </div>
 
             {/* Bangla subtitle */}
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl lg:mx-0">
@@ -184,7 +186,7 @@ export default function Hero() {
               {/* Organizer strip */}
               <div className="mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.svg" alt="OnnoPoth logo" className="h-9 w-9 rounded-lg" />
+                <img src="/logo-light.svg" alt="OnnoPoth" className="h-5 w-auto" />
                 <div>
                   <p className="text-xs font-bold text-white">Organized by OnnoPoth</p>
                   <p className="text-[11px] text-slate-500">আয়োজক কমিটি</p>
@@ -209,7 +211,7 @@ export default function Hero() {
         {/* ---------------- Bottom ticker ---------------- */}
         <div className="mt-16 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] py-3.5">
           <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 px-4 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px]">
-            <span>20–23 Nov · Registration</span>
+            <span>{dates.registrationWindowLabelEn} · Registration</span>
             <span className="h-1 w-1 rounded-full bg-indigo-400" />
             <span>25 Nov · Confirmed list</span>
             <span className="h-1 w-1 rounded-full bg-indigo-400" />
