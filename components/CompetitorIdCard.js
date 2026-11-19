@@ -1,3 +1,4 @@
+import { Mark } from './Logo';
 import { event, idCardSample } from '@/lib/config';
 
 /**
@@ -18,41 +19,24 @@ export default function CompetitorIdCard({ data = idCardSample }) {
   ];
 
   return (
-    <div className="id-card mx-auto w-full max-w-3xl overflow-hidden rounded-3xl border border-white/15 bg-navy-900/80 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur-xl">
-      {/* Accent strip */}
-      <div className="id-card-accent h-1.5 w-full bg-accent-gradient" />
-
-      {/* Header — branding only, no extra identity fields */}
-      <div className="id-card-header flex flex-wrap items-center gap-4 border-b border-white/10 px-6 py-5 sm:px-9">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.svg" alt="OnnoPoth logo" className="h-10 w-10 shrink-0 rounded-lg" />
+    <div className="id-card mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-line bg-surface shadow-lift">
+      <div className="flex items-center gap-3 border-b border-line px-6 py-4 sm:px-8">
+        <Mark className="h-8 w-8 shrink-0 text-ink" />
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-indigo-300">
-            OnnoPoth
-          </p>
-          <p className="truncate text-sm font-bold text-white sm:text-base">{event.name}</p>
+          <p className="text-sm font-semibold text-ink">OnnoPoth</p>
+          <p className="truncate text-xs text-ink-3">{event.name}</p>
         </div>
-        <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-indigo-200">
-          Competitor ID
-        </span>
+        <span className="rounded-full border border-line-strong px-2.5 py-1 text-[11px] font-semibold text-ink-2">Competitor ID</span>
       </div>
-
-      {/* Identity fields — exactly eight, in order */}
-      <div className="id-card-body grid gap-x-8 gap-y-5 px-6 py-7 sm:grid-cols-2 sm:px-9 sm:py-9">
+      <dl className="grid gap-x-8 gap-y-5 px-6 py-6 sm:grid-cols-2 sm:px-8 sm:py-7">
         {fields.map((field) => (
           <div key={field.label} className="min-w-0">
-            <p className="id-card-label text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
-              {field.label}
-            </p>
-            <p className="id-card-value mt-1 break-words text-sm font-semibold text-white sm:text-base">
-              {field.value}
-            </p>
+            <dt className="text-xs text-ink-3">{field.label}</dt>
+            <dd className="mt-1 break-words text-[15px] font-semibold text-ink">{field.value}</dd>
           </div>
         ))}
-      </div>
-
-      {/* Footer line — no extra identity information */}
-      <div className="id-card-footer border-t border-white/10 px-6 py-4 text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 sm:px-9">
+      </dl>
+      <div className="border-t border-line bg-paper px-6 py-3 text-xs text-ink-3 sm:px-8">
         {event.organizer} · {event.mode}
       </div>
     </div>
