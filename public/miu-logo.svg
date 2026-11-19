@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <title>MIU — Learn Grow Succeed</title>
+  <!-- M -->
+  <path d="M72 196V104L132 164L192 104V196" stroke="#0B1B33" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- i -->
+  <path d="M245 116V196" stroke="#0B1B33" stroke-width="25" stroke-linecap="round"/>
+  <circle cx="245" cy="82" r="15" fill="#0A66FF"/>
+  <!-- u -->
+  <path d="M305 116V164C305 193 323 203 348 203C373 203 391 193 391 164V116" stroke="#0B1B33" stroke-width="25" stroke-linecap="round"/>
+  <!-- growth arrow -->
+  <path d="M300 228C350 232 405 210 447 165" stroke="#0A66FF" stroke-width="16" stroke-linecap="round"/>
+  <path d="M447 165L412 168L437 193Z" fill="#0A66FF"/>
+  <!-- tagline -->
+  <text x="300" y="272" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" letter-spacing="2" fill="#0B1B33">Learn Grow Succeed</text>
+</svg>

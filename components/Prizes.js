@@ -1,7 +1,7 @@
-import { Crown, Medal, Award, Gift, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Crown, Medal, Award, Gift, Sparkles } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import LazyObject3D from './three/LazyObject3D';
-import { prizes, event } from '@/lib/config';
+import { prizes, event, giftSponsor } from '@/lib/config';
 
 /**
  * Premium prize cards — each theme carries its own metallic gradient, glow and
@@ -148,6 +148,32 @@ export default function Prizes() {
               </div>
             );
           })}
+        </div>
+
+        {/* Gift sponsor */}
+        <div className="glass relative mt-9 flex flex-col items-center justify-between gap-6 overflow-hidden p-6 sm:flex-row sm:p-8">
+          <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-amber-400/10 blur-[70px]" />
+          <div className="relative flex items-center gap-5">
+            <div className="shrink-0 rounded-2xl bg-white p-3 shadow-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={giftSponsor.logo} alt={`${giftSponsor.name} logo`} className="h-12 w-auto sm:h-14" />
+            </div>
+            <div>
+              <p className="flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[0.2em] text-amber-300">
+                <Gift className="h-3.5 w-3.5" /> Gift Sponsor
+              </p>
+              <h3 className="mt-1 text-xl font-extrabold text-white">{giftSponsor.name}</h3>
+              <p className="text-xs text-slate-400">{giftSponsor.tagline}</p>
+            </div>
+          </div>
+          <a
+            href={giftSponsor.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary relative shrink-0 !px-5 !py-2.5 !text-xs"
+          >
+            Facebook Page <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
         </div>
       </div>
     </section>

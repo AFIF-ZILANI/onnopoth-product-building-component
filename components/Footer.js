@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight, Heart } from 'lucide-react';
-import { event, navLinks, contacts } from '@/lib/config';
+import { event, navLinks, contacts, giftSponsor } from '@/lib/config';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -85,7 +85,19 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
-          <p>Organized by {event.organizer} – আয়োজক কমিটি</p>
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            Organized by {event.organizer} – আয়োজক কমিটি
+            <span className="text-slate-600">|</span>
+            Gift Sponsor:{' '}
+            <a
+              href={giftSponsor.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-amber-300 hover:text-amber-200"
+            >
+              {giftSponsor.name} ↗
+            </a>
+          </p>
           <p className="flex items-center gap-1.5">
             © {year} {event.organizer}. All rights reserved.
             <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />
