@@ -44,7 +44,7 @@ export default function Prizes() {
         <SectionHeading
           index="06"
           eyebrow="Prizes"
-          title="পুরস্কার"
+          title={<><span className="text-gradient-warm">পুরস্কার</span></>}
           subtitle={`সেরা তিনটি প্রোডাক্টের জন্য রয়েছে উপহার। ${event.prizeLabel} — অপেক্ষা করছে তোমার জন্য!`}
         />
 

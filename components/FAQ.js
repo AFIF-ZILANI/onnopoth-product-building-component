@@ -16,7 +16,7 @@ export default function FAQ() {
               align="left"
               title={
                 <>
-                  প্রশ্ন করো, <span className="gradient-text">উত্তর পাও</span>
+                  প্রশ্ন করো, <span className="text-gradient-warm">উত্তর পাও</span>
                 </>
               }
               subtitle="এখন আর accordion খুঁজতে হবে না — আমাদের AI অ্যাসিস্ট্যান্টের সাথে চ্যাট করে সাধারণ প্রশ্নের উত্তর নিন।"

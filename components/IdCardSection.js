@@ -9,7 +9,7 @@ export default function IdCardSection() {
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Competitor ID Card"
-          title="প্রতিযোগীর আইডি কার্ড"
+          title={<>প্রতিযোগীর <span className="text-gradient-cool">আইডি কার্ড</span></>}
           subtitle="প্রত্যেক প্রতিযোগীর পরিচয়ের জন্য একটিমাত্র কার্ড — রুলবুকের PDF-এও একই কার্ড পাবেন।"
         />
         <div className="mt-14">

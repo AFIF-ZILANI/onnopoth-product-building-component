@@ -39,7 +39,7 @@ export default function JudgingCriteria() {
         <SectionHeading
           index="05"
           eyebrow="Judging criteria"
-          title="বিচারের মানদণ্ড"
+          title={<>বিচারের <span className="text-gradient-warm">মানদণ্ড</span></>}
           subtitle={`মোট ${total} নম্বর। প্রতিটি বিভাগের ওজন নিচে দেখানো হয়েছে।`}
         />
 

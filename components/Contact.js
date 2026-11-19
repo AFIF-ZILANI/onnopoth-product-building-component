@@ -13,7 +13,7 @@ export default function Contact() {
         <SectionHeading
           index="09"
           eyebrow="Contact"
-          title="কোনো প্রশ্ন আছে?"
+          title={<>কোনো <span className="text-gradient-warm">প্রশ্ন</span> আছে?</>}
           subtitle="রেজিস্ট্রেশন বা নিয়ম নিয়ে যেকোনো হেল্প লাগলে সরাসরি যোগাযোগ করুন—আমরা সাহায্য করতে প্রস্তুত।"
         />
 

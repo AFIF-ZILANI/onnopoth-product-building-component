@@ -185,7 +185,7 @@ export default function RegistrationForm() {
         <SectionHeading
           index="07"
           eyebrow="Registration"
-          title="এখুনি রেজিস্ট্রেশন করো"
+          title={<>এখুনি <span className="text-gradient-warm">রেজিস্ট্রেশন</span> করো</>}
           subtitle={`রেজিস্ট্রেশন শেষ হবে ${dates.registrationDeadlineLabel}। ফর্ম পূরণ করে আইডিয়া জমা দিন—আমরা ইমেইলে কনফার্মেশন পাঠাব।`}
         />
 

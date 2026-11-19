@@ -28,7 +28,7 @@ export default function AiCoreSection() {
               align="left"
               title={
                 <>
-                  AI-এর সাথে <span className="gradient-text">বানানোর গল্প</span>
+                  AI-এর সাথে <span className="text-gradient-cool">বানানোর গল্প</span>
                 </>
               }
               subtitle="এই প্রতিযোগিতার আসল বিষয় হলো AI-কে কাজে লাগানো। নিচের অবজেক্টটা ঘুরিয়ে দেখো — ইন্টারঅ্যাকটিভ 3D!"

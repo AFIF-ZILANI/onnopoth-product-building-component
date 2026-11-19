@@ -50,7 +50,7 @@ export default function Timeline() {
         <SectionHeading
           index="03"
           eyebrow="Timeline"
-          title="প্রতিযোগিতার সময়সূচি"
+          title={<>প্রতিযোগিতার <span className="text-gradient-cool">সময়সূচি</span></>}
           subtitle="রেজিস্ট্রেশন থেকে ফলাফল—সব ধাপ এক নজরে।"
         />
 

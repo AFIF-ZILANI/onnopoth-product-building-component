@@ -43,7 +43,7 @@ export default function About() {
               align="left"
               title={
                 <>
-                  আইডিয়া থেকে <span className="gradient-text">লাইভ প্রোডাক্ট</span>
+                  আইডিয়া থেকে <span className="text-gradient-warm">লাইভ প্রোডাক্ট</span>
                 </>
               }
               subtitle="এটা কোনো এক্সাম নয়—আসল কাজ হলো হাতে-কলমে কিছু বানানো। AI-এর সাহায্যে তোমার আইডিয়া কয়েক ঘণ্টার মধ্যেই বাস্তব রূপ পাবে।"

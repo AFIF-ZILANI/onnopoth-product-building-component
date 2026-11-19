@@ -1,5 +1,5 @@
-/* Noto Sans Bengali — loaded from Google Fonts. Bangla is the default typeface. */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
+/* Bangla typefaces — Noto Sans Bengali for body, Hind Siliguri for display headings. */
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,6 +10,52 @@
 --------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
+  --font-bangla-display: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+}
+
+/* All headings use the friendlier rounded Bangla display face. */
+h1, h2, h3, h4 {
+  font-family: var(--font-bangla-display);
+  letter-spacing: -0.01em;
+}
+
+/* Animated, colourful gradient text */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.text-gradient-warm,
+.text-gradient-cool {
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 7s linear infinite;
+}
+
+.text-gradient-warm {
+  background-image: linear-gradient(100deg, #fbbf24, #fb7185, #c084fc, #fbbf24);
+}
+.text-gradient-cool {
+  background-image: linear-gradient(100deg, #22d3ee, #818cf8, #e879f9, #22d3ee);
+}
+
+/* Soft marker highlight for a key Bangla word */
+.text-marker {
+  position: relative;
+  white-space: nowrap;
+}
+.text-marker::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 0.08em;
+  height: 0.28em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(251,191,36,0.35), rgba(236,72,153,0.3));
+  z-index: -1;
 }
 
 html {
@@ -124,6 +170,8 @@ section[id] {
   /* Gradient text for headlines. */
   .gradient-text {
     @apply bg-accent-gradient bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-shift 8s linear infinite;
   }
 
   /* Primary call-to-action button. */

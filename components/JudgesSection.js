@@ -11,7 +11,7 @@ export default function JudgesSection() {
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Judges & committee"
-          title="বিচারকমণ্ডলী ও আয়োজক কমিটি"
+          title={<>বিচারকমণ্ডলী ও <span className="text-gradient-cool">আয়োজক কমিটি</span></>}
           subtitle="২৮ নভেম্বর বিচারকমণ্ডলী প্রোডাক্ট যাচাই করবেন — তাদের সিদ্ধান্তই চূড়ান্ত।"
         />
 

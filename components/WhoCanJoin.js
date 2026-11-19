@@ -31,7 +31,7 @@ export default function WhoCanJoin() {
         <SectionHeading
           index="02"
           eyebrow="Who can join"
-          title="কে অংশ নিতে পারবে?"
+          title={<>কে <span className="text-gradient-warm">অংশ নিতে পারবে</span>?</>}
           subtitle="শিক্ষার্থী, শিক্ষানবিস আর কৌতূহলী মন—সবাইকে স্বাগতম। শর্ত খুবই সহজ:"
         />
 

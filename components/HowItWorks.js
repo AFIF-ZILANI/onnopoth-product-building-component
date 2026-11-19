@@ -49,7 +49,7 @@ export default function HowItWorks() {
         <SectionHeading
           index="04"
           eyebrow="How it works"
-          title="কীভাবে কাজ করবে"
+          title={<>কীভাবে <span className="text-gradient-cool">কাজ করবে</span></>}
           subtitle="মাত্র ৬টি ধাপ—এবং তুমি প্রস্তুত।"
         />
 

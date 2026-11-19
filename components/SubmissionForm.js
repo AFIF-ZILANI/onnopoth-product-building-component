@@ -132,7 +132,7 @@ export default function SubmissionForm() {
         <SectionHeading
           index="01"
           eyebrow="Final submission"
-          title="প্রোডাক্ট জমা দিন"
+          title={<>প্রোডাক্ট <span className="text-gradient-warm">জমা দিন</span></>}
           subtitle={`সব লিংক যাচাই করে ${dates.submissionDeadlineLabel}-এর আগে জমা দিন।`}
         />
 

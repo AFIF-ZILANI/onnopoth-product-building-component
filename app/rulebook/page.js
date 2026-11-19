@@ -33,7 +33,8 @@ export default function RulebookPage() {
                 <BookOpen className="h-3.5 w-3.5" /> Official Rulebook
               </span>
               <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-                {rulebookIntro.title}
+                {rulebookIntro.title.replace(' – রুলবুক', '')} –{' '}
+                <span className="text-gradient-warm">রুলবুক</span>
               </h1>
               <p className="mt-2 text-sm text-slate-400">{rulebookIntro.organizer}</p>
             </div>
