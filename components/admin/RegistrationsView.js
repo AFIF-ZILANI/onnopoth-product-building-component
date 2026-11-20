@@ -336,7 +336,13 @@ function Detail({ r, emailConfigured, onBack, onDecide, onResend, onCopyLink }) 
       <div className="flex-1 space-y-6 p-5 sm:p-6">
         <Section title="কোন সমস্যার সমাধান">{r.problem}</Section>
         <Section title="কারা ব্যবহার করবে">{r.targetUsers}</Section>
-        <Section title="প্রধান ফিচার">{r.features}</Section>
+        <Section title="প্রধান ফিচার">
+          {Array.isArray(r.features) ? (
+            <ol className="list-decimal space-y-1 pl-5">{r.features.map((f, i) => <li key={i}>{f}</li>)}</ol>
+          ) : (
+            r.features
+          )}
+        </Section>
         {r.members?.length > 0 && (
           <Section title="টিমের সদস্য">
             <ol className="list-decimal pl-5">{r.members.map((m) => <li key={m}>{m}</li>)}</ol>

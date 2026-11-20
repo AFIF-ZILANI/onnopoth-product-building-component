@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   AlertCircle, ArrowRight, CalendarDays, CalendarPlus, Check, CheckCircle2, Clock3, Loader2, Lock,
-  RotateCcw, Search, ShieldCheck, User, Users,
+  Plus, RotateCcw, Search, ShieldCheck, User, Users, X,
 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { dates, isRegistrationOpen, event } from '@/lib/config';
-import { validateRegistration, normalisePhone, normaliseGithub, suggestEmail, LIMITS } from '@/lib/validation';
+import { validateRegistration, normalisePhone, normaliseGithub, suggestEmail, parseFeatures, LIMITS } from '@/lib/validation';
 import { eventIcs } from '@/lib/calendar';
 
 const EMPTY_FORM = {
@@ -25,7 +25,7 @@ const EMPTY_FORM = {
   productName: '',
   problem: '',
   users: '',
-  features: '',
+  features: ['', '', ''],
   agree: false,
   website: '', // hidden honeypot
 };
@@ -40,7 +40,8 @@ const LABELS = {
 const DRAFT_KEY = 'onnopoth-registration-draft-v1';
 const BN = '০১২৩৪৫৬৭৮৯';
 const bn = (n) => String(n).replace(/\d/g, (d) => BN[d]);
-const fieldId = (key) => (key === 'members' ? 'member-0' : key === 'registrationType' ? 'reg-type-solo' : key);
+const fieldId = (key) => (key === 'members' ? 'member-0' : key === 'registrationType' ? 'reg-type-solo' : key === 'features' ? 'feature-0' : key);
+const FEATURE_EXAMPLES = ['যেমন: আজকের বাজারদর দেখা', 'যেমন: দামের ট্রেন্ড গ্রাফ', 'যেমন: এলাকা অনুযায়ী তুলনা'];
 
 function readDraft() {
   try {
@@ -49,7 +50,10 @@ function readDraft() {
     const d = JSON.parse(raw);
     if (!d || typeof d !== 'object') return null;
     const members = Array.isArray(d.members) ? [...d.members.map(String), '', '', ''].slice(0, 3) : EMPTY_FORM.members;
-    return { ...EMPTY_FORM, ...d, members, website: '' };
+    // Drafts saved before features became a list hold one block of text.
+    const list = Array.isArray(d.features) ? d.features.map(String).slice(0, LIMITS.featuresMax) : parseFeatures(d.features).slice(0, LIMITS.featuresMax);
+    const features = [...list, '', '', ''].slice(0, Math.max(LIMITS.featuresRequired, list.length));
+    return { ...EMPTY_FORM, ...d, members, features, website: '' };
   } catch {
     return null;
   }
@@ -374,7 +378,9 @@ export default function RegistrationForm() {
                                 href={`#${fieldId(k)}`}
                                 onClick={(ev) => {
                                   ev.preventDefault();
-                                  const el = document.getElementById(fieldId(k));
+                                  // For features, go to the first required box that's still empty.
+                                  const firstEmpty = form.features.findIndex((f, i) => i < LIMITS.featuresRequired && !f.trim());
+                                  const el = document.getElementById(k === 'features' && firstEmpty > 0 ? `feature-${firstEmpty}` : fieldId(k));
                                   el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                   el?.focus({ preventScroll: true });
                                 }}
@@ -515,9 +521,12 @@ export default function RegistrationForm() {
                   <Field id="users" label="কারা এটি ব্যবহার করবে?" error={errorFor('users')} aside={<Counter value={form.users} max={LIMITS.long} />}>
                     <textarea {...inputProps('users')} rows={2} className="field-input resize-y" placeholder="যেমন: শহরের পরিবার, ছোট দোকানদার" />
                   </Field>
-                  <Field id="features" label="প্রধান ৩–৫টি ফিচার" error={errorFor('features')} hint="১২ ঘণ্টায় বানানো যায় এমন ছোট স্কোপ রাখো।" aside={<Counter value={form.features} max={LIMITS.long} min={LIMITS.featuresMin} />}>
-                    <textarea {...inputProps('features')} rows={4} className="field-input resize-y" placeholder={'১. আজকের দাম\n২. দামের ট্রেন্ড\n৩. এলাকা অনুযায়ী তুলনা'} />
-                  </Field>
+                  <FeatureList
+                    features={form.features}
+                    error={errorFor('features')}
+                    onChange={(features) => update({ features })}
+                    onLeave={() => touch('features')}
+                  />
                 </FormGroup>
 
                 <FormGroup index="৩" title="নিশ্চিত করো" complete={form.agree}>
@@ -617,5 +626,89 @@ function Success({ successRef, done, onCalendar }) {
         <Link href="/rulebook" className="btn-secondary">রুলবুক</Link>
       </div>
     </div>
+  );
+}
+
+/**
+ * Main features: three required inputs, up to two more optional ones.
+ * Enter moves to the next box (or adds one) instead of submitting the form.
+ */
+function FeatureList({ features, error, onChange, onLeave }) {
+  const refs = useRef([]);
+  const required = LIMITS.featuresRequired;
+  const canAdd = features.length < LIMITS.featuresMax;
+
+  const focus = (i) => requestAnimationFrame(() => refs.current[i]?.focus());
+  const set = (i, value) => onChange(features.map((f, j) => (j === i ? value : f)));
+  const add = () => {
+    if (!canAdd) return;
+    onChange([...features, '']);
+    focus(features.length);
+  };
+  const remove = (i) => {
+    onChange(features.filter((_, j) => j !== i));
+    focus(Math.min(i, features.length - 2));
+  };
+
+  return (
+    <fieldset
+      aria-describedby={error ? 'features-error' : 'features-hint'}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && onLeave()}
+    >
+      <legend className="field-label">প্রধান ফিচার <span className="font-normal text-ink-3">· ৩টি আবশ্যক, চাইলে আরও ২টি</span></legend>
+      <ol className="space-y-2.5">
+        {features.map((value, i) => {
+          const optional = i >= required;
+          const missing = error && !optional && !value.trim();
+          const n = [...value].length;
+          return (
+            <li key={i} className="flex items-center gap-2">
+              <span aria-hidden className={`grid h-7 w-7 shrink-0 place-items-center rounded-full font-display text-[13px] font-semibold ${value.trim() ? 'bg-brand text-white' : 'bg-sunken text-ink-3'}`}>
+                {bn(i + 1)}
+              </span>
+              <div className="relative min-w-0 flex-1">
+                <input
+                  ref={(el) => (refs.current[i] = el)}
+                  id={`feature-${i}`}
+                  className={`field-input ${n > LIMITS.feature * 0.8 ? '!pr-16' : ''}`}
+                  aria-label={`ফিচার ${bn(i + 1)}${optional ? ' (ঐচ্ছিক)' : ''}`}
+                  aria-invalid={missing || (error && n > LIMITS.feature) ? true : undefined}
+                  placeholder={optional ? 'আরেকটি ফিচার (ঐচ্ছিক)' : FEATURE_EXAMPLES[i]}
+                  maxLength={LIMITS.feature + 40}
+                  enterKeyHint={i < features.length - 1 || canAdd ? 'next' : 'done'}
+                  value={value}
+                  onChange={(e) => set(i, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
+                    e.preventDefault();
+                    if (i < features.length - 1) focus(i + 1);
+                    else if (value.trim()) add();
+                  }}
+                />
+                {n > LIMITS.feature * 0.8 && (
+                  <span className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums ${n > LIMITS.feature ? 'font-semibold text-red-600' : 'text-ink-3'}`}>
+                    {bn(n)}/{bn(LIMITS.feature)}
+                  </span>
+                )}
+              </div>
+              {optional ? (
+                <button type="button" onClick={() => remove(i)} aria-label={`ফিচার ${bn(i + 1)} সরাও`} className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-ink-3 transition-colors hover:bg-sunken hover:text-ink">
+                  <X className="h-4 w-4" />
+                </button>
+              ) : (
+                <span aria-hidden className="w-9 shrink-0" />
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      {canAdd && (
+        <button type="button" onClick={add} className="ml-9 mt-2.5 inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft">
+          <Plus className="h-4 w-4" /> আরেকটি ফিচার যোগ করো <span className="font-normal text-ink-3">(আরও {bn(LIMITS.featuresMax - features.length)}টি)</span>
+        </button>
+      )}
+      {!error && <p id="features-hint" className="field-hint ml-9">প্রতিটি ঘরে একটি করে, ছোট করে লেখো। ১২ ঘণ্টায় বানানো যায় এমন স্কোপ রাখো।</p>}
+      <div className="ml-9"><FieldError id="features-error" message={error} /></div>
+    </fieldset>
   );
 }

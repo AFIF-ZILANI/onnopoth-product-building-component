@@ -40,7 +40,7 @@ describe('phaseAt', () => {
 
 describe('email templates', () => {
   const evil = '<script>alert(1)</script>';
-  const reg = { id: 1, registrationType: 'team', fullName: evil, teamName: 'T', members: [evil], institution: 'I', className: 'C', whatsapp: '01712345678', email: 'a@b.c', github: 'g', productName: evil, problem: 'p', targetUsers: 'u', features: 'f', decisionNote: evil };
+  const reg = { id: 1, registrationType: 'team', fullName: evil, teamName: 'T', members: [evil], institution: 'I', className: 'C', whatsapp: '01712345678', email: 'a@b.c', github: 'g', productName: evil, problem: 'p', targetUsers: 'u', features: ['f1', evil, 'f3'], decisionNote: evil };
   const sub = { name: evil, email: 'a@b.c', productName: 'P', platform: 'github', githubUrl: 'https://github.com/a/b', liveUrl: 'https://x.vercel.app/"><img>', demoUrl: '', aiTools: evil, timeSpent: '', readme: true };
   const all = {
     registrationOrganizer: T.registrationOrganizer(reg),
@@ -65,6 +65,11 @@ describe('email templates', () => {
   it('puts the personal submit link in the approval email', () => {
     expect(all.approval.html).toContain('https://site/submit?token=abc');
     expect(all.approval.text).toContain('https://site/submit?token=abc');
+  });
+
+  it('lists features as numbered lines in the organizer email', () => {
+    expect(all.registrationOrganizer.html).toContain('1. f1<br/>2. &lt;script&gt;');
+    expect(all.registrationOrganizer.text).toContain('3. f3');
   });
 
   it('shows scores in Bangla digits', () => {

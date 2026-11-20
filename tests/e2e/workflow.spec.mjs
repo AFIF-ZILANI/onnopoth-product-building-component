@@ -50,7 +50,9 @@ test('participant registers', async ({ page }) => {
   await page.locator('#productName').fill(team.product);
   await page.locator('#problem').fill('বাজারে প্রতিদিন দাম বদলায়, ক্রেতারা আগে জানতে পারেন না।');
   await page.locator('#users').fill('শহরের পরিবার');
-  await page.locator('#features').fill('আজকের দাম, ট্রেন্ড, তুলনা');
+  await page.locator('#feature-0').fill('আজকের দাম');
+  await page.locator('#feature-1').fill('দামের ট্রেন্ড');
+  await page.locator('#feature-2').fill('এলাকা অনুযায়ী তুলনা');
   await page.locator('#agree').check();
   await form.getByRole('button', { name: /রেজিস্ট্রেশন জমা দাও/ }).click();
   await expect(page.getByRole('heading', { name: 'রেজিস্ট্রেশন সম্পন্ন হয়েছে' })).toBeVisible();

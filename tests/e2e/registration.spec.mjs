@@ -20,7 +20,7 @@ async function fillValid(page, overrides = {}) {
   const v = {
     fullName: 'রহিম উদ্দিন', institution: 'Dhaka College', className: 'HSC', whatsapp: '01712345678',
     email: `reg-${stamp()}@example.com`, github: 'rahimdev', productName: 'বাজারদর',
-    problem: 'বাজারে প্রতিদিন দাম বদলায়, ক্রেতারা আগে জানতে পারেন না।', users: 'শহরের পরিবার', features: 'আজকের দাম, ট্রেন্ড, তুলনা',
+    problem: 'বাজারে প্রতিদিন দাম বদলায়, ক্রেতারা আগে জানতে পারেন না।', users: 'শহরের পরিবার', 'feature-0': 'আজকের দাম', 'feature-1': 'দামের ট্রেন্ড', 'feature-2': 'এলাকা অনুযায়ী তুলনা',
     ...overrides,
   };
   for (const [k, val] of Object.entries(v)) if (val !== null) await page.locator(`#${k}`).fill(val);
@@ -171,6 +171,45 @@ test('registering the same email twice explains what to do', async ({ page }) =>
   // Changing the email clears that error.
   await page.locator('#email').fill(`other-${stamp()}@example.com`);
   await expect(page.locator('#email-error')).toBeHidden();
+});
+
+test('features: three required boxes, up to two more, Enter moves along', async ({ page }) => {
+  const form = await fresh(page);
+  await expect(page.locator('[id^="feature-"]')).toHaveCount(3);
+  await page.locator('#feature-0').fill('আজকের দাম');
+  await page.locator('#feature-0').press('Enter');
+  await expect(page.locator('#feature-1')).toBeFocused();
+  await page.locator('#feature-1').fill('দামের ট্রেন্ড');
+  await page.locator('#feature-1').press('Enter');
+  await page.locator('#feature-2').fill('এলাকা অনুযায়ী তুলনা');
+  // Enter on the last filled box adds an optional one.
+  await page.locator('#feature-2').press('Enter');
+  await expect(page.locator('#feature-3')).toBeFocused();
+  await page.locator('#feature-3').fill('অফলাইন মোড');
+  await page.getByRole('button', { name: /আরেকটি ফিচার যোগ করো/ }).click();
+  await expect(page.locator('#feature-4')).toBeFocused();
+  await expect(page.getByRole('button', { name: /আরেকটি ফিচার যোগ করো/ })).toBeHidden();
+  // Optional boxes can be removed; required ones cannot.
+  await page.getByRole('button', { name: 'ফিচার ৫ সরাও' }).click();
+  await expect(page.locator('[id^="feature-"]')).toHaveCount(4);
+  await expect(page.getByRole('button', { name: 'ফিচার ১ সরাও' })).toHaveCount(0);
+  // Enter never submits the form from a feature box.
+  await expect(page.getByRole('alert').filter({ hasText: 'ঘর ঠিক করতে হবে' })).toBeHidden();
+  expect(form).toBeTruthy();
+});
+
+test('features: missing ones are pointed out, and the summary jumps to the empty box', async ({ page }) => {
+  const form = await fresh(page);
+  await fillValid(page, { 'feature-1': '', 'feature-2': '' });
+  await submit(form);
+  await expect(page.locator('#features-error')).toContainText('এখন ১টি');
+  await expect(page.locator('#feature-1')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.locator('#feature-0')).not.toHaveAttribute('aria-invalid', 'true');
+  await page.getByRole('alert').getByRole('link', { name: /ফিচার/ }).click();
+  await expect(page.locator('#feature-1')).toBeFocused();
+  await page.locator('#feature-1').fill('আজকের দাম');
+  await page.locator('#feature-2').fill('আজকের দাম');
+  await expect(page.locator('#features-error')).toContainText('দুবার');
 });
 
 test('a network failure keeps everything typed', async ({ page }) => {

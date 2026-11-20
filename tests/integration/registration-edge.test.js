@@ -97,10 +97,47 @@ describe('registration edge cases', () => {
     expect(r.productName).toBe('Bazardor App');
   });
 
-  it('asks for a little more detail when the idea is one or two words', async () => {
-    const res = await post(registrationBody({ problem: 'দাম', features: 'লগইন' }));
-    const { fields } = await res.json();
-    expect(fields).toHaveProperty('problem');
-    expect(fields).toHaveProperty('features');
+  it('asks for a little more detail when the problem is one or two words', async () => {
+    const res = await post(registrationBody({ problem: 'দাম' }));
+    expect((await res.json()).fields).toHaveProperty('problem');
+  });
+
+  it('stores three required features as a list, ignoring empty optional slots', async () => {
+    const b = registrationBody({ features: [' আজকের দাম ', 'দামের ট্রেন্ড', 'এলাকা অনুযায়ী তুলনা', '', ''] });
+    expect((await post(b)).status).toBe(200);
+    expect((await row(b.email)).features).toEqual(['আজকের দাম', 'দামের ট্রেন্ড', 'এলাকা অনুযায়ী তুলনা']);
+  });
+
+  it('accepts up to five features', async () => {
+    const b = registrationBody({ features: ['A one', 'B two', 'C three', 'D four', 'E five'] });
+    expect((await post(b)).status).toBe(200);
+    expect((await row(b.email)).features).toHaveLength(5);
+  });
+
+  it.each([
+    [['Only one', '', ''], 'অন্তত ৩টি'],
+    [['Same', 'same ', 'Other'], 'দুবার'],
+    [['A', 'B', 'C', 'D', 'E', 'F'], 'সর্বোচ্চ ৫টি'],
+    [['x'.repeat(201), 'B', 'C'], '২০০ অক্ষর'],
+  ])('rejects features %j with a clear message', async (features, message) => {
+    const res = await post(registrationBody({ features }));
+    expect(res.status).toBe(400);
+    expect((await res.json()).fields.features).toContain(message);
+  });
+
+  it('can still decide on a registration made before features became a list', async () => {
+    const [legacy] = await getSql()`insert into ${t('registrations')}
+      (registration_type, full_name, institution, class_name, whatsapp, email, github, product_name, problem, target_users, features)
+      values ('solo', 'Legacy', 'I', 'C', '01712345678', ${`legacy-${Date.now()}@example.com`}, 'g', 'P', 'p', 'u', ${['one line of features']})
+      returning id`;
+    const { decide } = await import('@/lib/repo.js');
+    const res = await decide(legacy.id, 'approved', { actor: 'admin@test.local' });
+    expect(res.registration.status).toBe('approved');
+  });
+
+  it('still understands an old-style block of text', async () => {
+    const b = registrationBody({ features: '১. আজকের দাম\n২) দামের ট্রেন্ড\n- এলাকা অনুযায়ী তুলনা' });
+    expect((await post(b)).status).toBe(200);
+    expect((await row(b.email)).features).toEqual(['আজকের দাম', 'দামের ট্রেন্ড', 'এলাকা অনুযায়ী তুলনা']);
   });
 });

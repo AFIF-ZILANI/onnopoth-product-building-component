@@ -19,7 +19,7 @@ export function registrationBody(overrides = {}) {
     productName: `Product ${n}`,
     problem: 'Prices change daily.',
     users: 'Families',
-    features: 'Prices, trends, compare',
+    features: ['Daily prices', 'Price trends', 'Compare by area'],
     agree: true,
     website: '',
     ...overrides,
