@@ -15,8 +15,8 @@ const COLUMNS = {
   ],
   submissions: [
     ['id', 'ID'], ['createdAt', 'Submitted at'], ['updatedAt', 'Updated at'], ['name', 'Team / name'], ['email', 'Email'],
-    ['institution', 'Institution'], ['productName', 'Product'], ['platform', 'Platform'], ['liveUrl', 'Live URL'],
-    ['githubUrl', 'GitHub'], ['demoUrl', 'Demo'], ['aiTools', 'AI tools'], ['timeSpent', 'Time spent'], ['score', 'Score'], ['judgeNotes', 'Notes'],
+    ['institution', 'Institution'], ['productName', 'Product'], ['liveUrl', 'Live URL'], ['description', 'Description'],
+    ['score', 'Score'], ['judgeNotes', 'Notes'],
   ],
 };
 

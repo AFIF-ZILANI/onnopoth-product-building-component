@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.mjs';
 
 /**
  * Every field of the registration form, the edge cases found in the audit,

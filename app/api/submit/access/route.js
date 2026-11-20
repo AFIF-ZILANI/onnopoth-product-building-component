@@ -14,11 +14,10 @@ export async function GET(req) {
     return Response.json({
       allowed: true,
       name: r.teamName || r.fullName,
+      leader: r.fullName,
       email: r.email,
       productName: r.productName,
-      submitted: existing
-        ? { at: existing.updatedAt, platform: existing.platform, githubUrl: existing.githubUrl, liveUrl: existing.liveUrl, demoUrl: existing.demoUrl, aiTools: existing.aiTools, timeSpent: existing.timeSpent, name: existing.name, productName: existing.productName }
-        : null,
+      submitted: existing ? { at: existing.updatedAt, liveUrl: existing.liveUrl, description: existing.description || '' } : null,
     });
   } catch (error) {
     console.error('Submit access failed:', error);

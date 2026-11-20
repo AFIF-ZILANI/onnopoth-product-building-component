@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.mjs';
 
 test.describe('mobile menu', () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.mjs';
 
 test.describe('rulebook docs layout', () => {
   test('sidebar navigation, scroll-spy and on-this-section', async ({ page }) => {

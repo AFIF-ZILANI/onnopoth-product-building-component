@@ -336,8 +336,9 @@ describe('submission links and final submissions', () => {
   it('refuses without a valid token, with bad input, and after the deadline', async () => {
     vi.setSystemTime(DURING_BUILD);
     expect((await submit.POST(request('/api/submit', { method: 'POST', body: submissionBody() }))).status).toBe(403);
-    const bad = await submit.POST(request('/api/submit', { method: 'POST', body: { ...submissionBody({ liveUrl: 'nope' }), token } }));
+    const bad = await submit.POST(request('/api/submit', { method: 'POST', body: { ...submissionBody({ liveUrl: 'https://github.com/a/b' }), token } }));
     expect(bad.status).toBe(400);
+    expect((await bad.json()).fields.liveUrl).toContain('GitHub');
     vi.setSystemTime(AFTER_DEADLINE);
     expect((await submit.POST(request('/api/submit', { method: 'POST', body: { ...submissionBody(), token } }))).status).toBe(403);
   });
@@ -355,6 +356,53 @@ describe('submission links and final submissions', () => {
     expect((await score.POST(adminPost('/api/admin/score', { submissionId: 99999999, score: 50 }))).status).toBe(404);
     const ok = await body(await score.POST(adminPost('/api/admin/score', { submissionId: id, score: 88, notes: 'Strong demo' })));
     expect(ok.submission).toMatchObject({ score: 88, judgeNotes: 'Strong demo' });
+  });
+});
+
+describe('the participant flow, with an email at every step', () => {
+  it('register → confirmation, approve → link, submit → confirmation; or reject → rejection', async () => {
+    vi.setSystemTime(DURING_REGISTRATION);
+    await signIn();
+    sink.use();
+
+    // 1. Register: confirmation email.
+    const b = registrationBody();
+    await register.POST(request('/api/register', { method: 'POST', body: b }));
+    expect(sink.messages.map((m) => [m.to[0], m.subject])).toEqual([[b.email, 'আপনার রেজিস্ট্রেশন গ্রহণ করা হয়েছে']]);
+    const reg = await registrationByEmail(b.email);
+
+    // 2. Approve: email with a personal link to submit the live URL.
+    sink.clear();
+    await decision.POST(adminPost('/api/admin/decision', { id: reg.id, decision: 'approved' }));
+    expect(sink.messages).toHaveLength(1);
+    expect(sink.messages[0].subject).toMatch(/অ্যাপ্রুভ হয়েছে/);
+    expect(sink.messages[0].text).toContain('লাইভ প্রোজেক্ট');
+    const token = decodeURIComponent(sink.messages[0].text.match(/submit\?token=([^"\s<&]+)/)[1]);
+
+    // 3. Submit live URL + optional description: confirmation email with what was received.
+    sink.clear();
+    vi.setSystemTime(DURING_BUILD);
+    const res = await submit.POST(request('/api/submit', { method: 'POST', body: { token, liveUrl: 'my-app.vercel.app', description: 'বাজারদর ট্র্যাকার' } }));
+    expect(await res.json()).toMatchObject({ ok: true, updated: false, emailed: true });
+    expect(sink.messages).toHaveLength(1);
+    expect(sink.messages[0].subject).toBe('তোমার প্রোডাক্ট জমা হয়েছে');
+    expect(sink.messages[0].text).toContain('https://my-app.vercel.app');
+    expect(sink.messages[0].text).toContain('বাজারদর ট্র্যাকার');
+
+    // Resubmitting says "updated".
+    sink.clear();
+    await submit.POST(request('/api/submit', { method: 'POST', body: { token, liveUrl: 'https://v2.vercel.app' } }));
+    expect(sink.messages[0].subject).toBe('তোমার জমা আপডেট হয়েছে');
+
+    // 4. Another registration is rejected: rejection email, and no submission link works.
+    vi.setSystemTime(DURING_REGISTRATION);
+    const b2 = registrationBody();
+    await register.POST(request('/api/register', { method: 'POST', body: b2 }));
+    const reg2 = await registrationByEmail(b2.email);
+    sink.clear();
+    await decision.POST(adminPost('/api/admin/decision', { id: reg2.id, decision: 'declined' }));
+    expect(sink.messages.map((m) => m.subject)).toEqual([expect.stringMatching(/^আইডিয়া আপডেট/)]);
+    expect(sink.messages[0].text).not.toMatch(/submit\?token=/);
   });
 });
 

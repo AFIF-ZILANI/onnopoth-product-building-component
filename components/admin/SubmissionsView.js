@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Code2, Copy, ExternalLink, Loader2, MessageCircle, PlayCircle } from 'lucide-react';
 import { api, ago, copyText, n, useToast } from './ui';
 
-const PLATFORM = { github: 'GitHub + Vercel', lovable: 'Lovable', v0: 'v0' };
 
 export default function SubmissionsView({ submissions, registrations, onChange, onBuildResults }) {
   const toast = useToast();
@@ -100,15 +99,16 @@ function SubmissionRow({ s, onSaved }) {
         <div className="min-w-0">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-lg font-semibold">{s.productName}</h3>
-            <span className="text-xs text-ink-3">{s.updatedAt && s.updatedAt !== s.createdAt ? `আপডেট ${ago(s.updatedAt)}` : `জমা ${ago(s.createdAt)}`} · {PLATFORM[s.platform]}</span>
+            <span className="text-xs text-ink-3">{s.updatedAt && s.updatedAt !== s.createdAt ? `আপডেট ${ago(s.updatedAt)}` : `জমা ${ago(s.createdAt)}`} </span>
           </div>
           <p className="text-sm text-ink-3">{s.name} · {s.institution}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <a href={s.liveUrl} target="_blank" rel="noopener noreferrer" className="chip hover:border-ink-4"><ExternalLink className="h-3.5 w-3.5" /> লাইভ</a>
+            <a href={s.liveUrl} target="_blank" rel="noopener noreferrer" className="chip hover:border-ink-4"><ExternalLink className="h-3.5 w-3.5" /> {s.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a>
             {s.githubUrl && <a href={s.githubUrl} target="_blank" rel="noopener noreferrer" className="chip hover:border-ink-4"><Code2 className="h-3.5 w-3.5" /> GitHub</a>}
             {s.demoUrl && <a href={s.demoUrl} target="_blank" rel="noopener noreferrer" className="chip hover:border-ink-4"><PlayCircle className="h-3.5 w-3.5" /> ডেমো</a>}
           </div>
-          <p className="mt-3 whitespace-pre-wrap text-sm text-ink-2"><span className="font-medium text-ink">AI ব্যবহার:</span> {s.aiTools}</p>
+          {s.description && <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-ink-2">{s.description}</p>}
+          {s.aiTools && <p className="mt-2 whitespace-pre-wrap text-sm text-ink-3"><span className="font-medium text-ink-2">AI ব্যবহার:</span> {s.aiTools}</p>}
         </div>
         <form onSubmit={save} className="space-y-2 rounded-xl bg-paper p-3">
           <div className="flex items-center gap-2">

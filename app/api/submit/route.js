@@ -1,7 +1,8 @@
 /**
- * POST /api/submit — final product submission. Only works with a valid
- * approval link for an approved registration; the submission is stored
- * against that registration (resubmitting replaces it until the deadline).
+ * POST /api/submit { token, liveUrl, description? } — final submission: the
+ * live project URL and an optional short description. Only works with a
+ * valid approval link for an approved registration; resubmitting before the
+ * deadline replaces the earlier one. Sends the participant a confirmation.
  */
 import { isSubmissionOpen } from '@/lib/config';
 import { validateSubmission } from '@/lib/validation';

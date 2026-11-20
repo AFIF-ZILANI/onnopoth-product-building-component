@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.mjs';
 
 /**
  * The whole competition, as the participant and the organizer see it:
@@ -107,20 +107,20 @@ test('approved team submits with their personal link', async ({ page }) => {
   const { link } = await page.evaluate((id) => fetch('/api/admin/link', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then((r) => r.json()), reg.id);
 
   await page.goto(new URL(link).pathname + new URL(link).search);
-  await expect(page.locator('#s-email')).toHaveValue(team.email);
-  await expect(page.locator('#s-product')).toHaveValue(team.product);
-  await page.locator('#s-github').fill('https://github.com/rahimdev/bazardor');
-  await page.locator('#s-live').fill('https://bazardor.vercel.app');
-  await page.locator('#s-ai').fill('Cursor দিয়ে কোড');
-  await page.getByLabel(/README/).check();
-  await page.getByLabel(/সব নিয়ম মেনে/).check();
-  await page.getByRole('button', { name: /জমা দিন/ }).click();
-  await expect(page.getByText('জমা দেওয়া সফল হয়েছে')).toBeVisible();
+  const form = page.getByRole('form', { name: 'লাইভ প্রোজেক্ট জমার ফর্ম' });
+  await expect(form).toContainText(team.product);
+  await expect(form).toContainText(team.email);
+  await page.locator('#liveUrl').fill('bazardor.vercel.app');
+  await page.locator('#description').fill('বাজারদর দেখার সহজ অ্যাপ।');
+  await form.getByRole('button', { name: /জমা দাও/ }).click();
+  await expect(page.getByRole('heading', { name: 'জমা হয়েছে!' })).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('https://bazardor.vercel.app');
 
-  // Coming back to the link shows the resubmit notice with the saved values.
+  // Coming back to the link shows the saved values and offers an update.
   await page.reload();
-  await expect(page.getByText('আগেই জমা দেওয়া হয়েছে')).toBeVisible();
-  await expect(page.locator('#s-live')).toHaveValue('https://bazardor.vercel.app');
+  await expect(page.getByText('জমা দিয়েছ। নতুন লিংক বা বিবরণ দিয়ে জমা দিলে')).toBeVisible();
+  await expect(page.locator('#liveUrl')).toHaveValue('https://bazardor.vercel.app');
+  await expect(page.getByRole('button', { name: /আপডেট করো/ })).toBeVisible();
 });
 
 test('organizer scores and publishes results', async ({ page }) => {
@@ -128,8 +128,9 @@ test('organizer scores and publishes results', async ({ page }) => {
   await adminLogin(page);
   await page.getByRole('tab', { name: 'সাবমিশন ও নম্বর' }).click();
   await expect(page.getByRole('heading', { name: team.product })).toBeVisible();
-  await page.getByRole('spinbutton', { name: 'নম্বর' }).first().fill('92');
-  await page.getByRole('button', { name: 'সংরক্ষণ' }).first().click();
+  const card = page.getByRole('listitem').filter({ has: page.getByRole('heading', { name: team.product }) });
+  await card.getByRole('spinbutton', { name: 'নম্বর' }).fill('92');
+  await card.getByRole('button', { name: 'সংরক্ষণ' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'নম্বর সংরক্ষিত' })).toBeVisible();
 
   await page.getByRole('button', { name: 'নম্বর থেকে ফলাফল তৈরি করুন' }).click();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateRegistration, validateSubmission, validateResults, normalisePhone, normaliseGithub, suggestEmail, LIMITS } from '@/lib/validation.js';
+import { validateRegistration, validateSubmission, validateResults, normalisePhone, normaliseGithub, suggestEmail, isVercelUrl, LIMITS } from '@/lib/validation.js';
 import { registrationBody, submissionBody } from '../helpers/fixtures.js';
 
 describe('validateRegistration', () => {
@@ -93,27 +93,43 @@ describe('normalisers', () => {
 });
 
 describe('validateSubmission', () => {
-  it('accepts a GitHub submission', () => {
-    expect(validateSubmission(submissionBody()).errors).toEqual({});
+  it('needs only the live URL; the description is optional', () => {
+    expect(validateSubmission({ liveUrl: 'https://bazardor.vercel.app' }).errors).toEqual({});
+    expect(validateSubmission({ liveUrl: 'https://bazardor.vercel.app', description: 'x' }).errors).toEqual({});
+    expect(validateSubmission({}).errors).toHaveProperty('liveUrl');
   });
 
-  it('needs a real github.com repo URL and README confirmation for GitHub builds', () => {
-    const { errors } = validateSubmission(submissionBody({ githubUrl: 'https://gitlab.com/a/b', readme: false }));
-    expect(errors).toHaveProperty('githubUrl');
-    expect(errors).toHaveProperty('readme');
+  it('adds https:// and trims spaces', () => {
+    expect(validateSubmission({ liveUrl: '  bazardor.vercel.app ' }).data.liveUrl).toBe('https://bazardor.vercel.app');
+    expect(validateSubmission({ liveUrl: 'http://bazardor.vercel.app' }).data.liveUrl).toBe('http://bazardor.vercel.app');
   });
 
-  it('does not need GitHub or README for Lovable / v0, and drops a stray GitHub URL', () => {
-    const { data, errors } = validateSubmission(submissionBody({ platform: 'lovable', githubUrl: 'nope', readme: false }));
-    expect(errors).toEqual({});
-    expect(data.githubUrl).toBe('');
+  it.each([
+    ['localhost:3000', 'লোকাল'],
+    ['http://127.0.0.1:5173', 'লোকাল'],
+    ['https://github.com/rahim/bazardor', 'GitHub রিপোজিটরি'],
+    ['https://vercel.com/rahim/bazardor', 'ড্যাশবোর্ড'],
+    ['not a url', 'সঠিক নয়'],
+    ['https://nodot', 'সঠিক নয়'],
+  ])('explains what is wrong with %s', (liveUrl, message) => {
+    expect(validateSubmission({ liveUrl }).errors.liveUrl).toContain(message);
   });
 
-  it('rejects unknown platforms and non-http links', () => {
-    const { errors } = validateSubmission(submissionBody({ platform: 'replit', liveUrl: 'javascript:alert(1)', demoUrl: 'ftp://x' }));
-    expect(errors).toHaveProperty('platform');
-    expect(errors).toHaveProperty('liveUrl');
-    expect(errors).toHaveProperty('demoUrl');
+  it('accepts sites hosted elsewhere (Lovable, Netlify, custom domains)', () => {
+    for (const liveUrl of ['https://my-app.lovable.app', 'https://x.netlify.app', 'https://bazardor.com.bd/app']) {
+      expect(validateSubmission({ liveUrl }).errors).toEqual({});
+    }
+  });
+
+  it('limits the description to 500 characters, counting Bangla correctly', () => {
+    expect(validateSubmission({ liveUrl: 'https://a.vercel.app', description: 'ক'.repeat(500) }).errors).toEqual({});
+    expect(validateSubmission({ liveUrl: 'https://a.vercel.app', description: 'ক'.repeat(501) }).errors).toHaveProperty('description');
+  });
+
+  it('recognises Vercel URLs for the hint', () => {
+    expect(isVercelUrl('https://bazardor.vercel.app/path')).toBe(true);
+    expect(isVercelUrl('https://vercel.app.evil.com')).toBe(false);
+    expect(isVercelUrl('nope')).toBe(false);
   });
 });
 

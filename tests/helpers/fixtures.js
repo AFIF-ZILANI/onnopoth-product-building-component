@@ -28,16 +28,8 @@ export function registrationBody(overrides = {}) {
 
 export function submissionBody(overrides = {}) {
   return {
-    name: 'Team Test',
-    productName: 'Bazardor',
-    platform: 'github',
-    githubUrl: 'https://github.com/test/bazardor',
     liveUrl: 'https://bazardor.vercel.app',
-    demoUrl: '',
-    aiTools: 'Cursor and ChatGPT',
-    timeSpent: '9 hours',
-    readme: true,
-    agree: true,
+    description: 'Daily market prices with trends.',
     website: '',
     ...overrides,
   };
