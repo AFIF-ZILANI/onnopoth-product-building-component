@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateRegistration, validateSubmission, validateResults } from '@/lib/validation.js';
+import { validateRegistration, validateSubmission, validateResults, normalisePhone, normaliseGithub, suggestEmail, LIMITS } from '@/lib/validation.js';
 import { registrationBody, submissionBody } from '../helpers/fixtures.js';
 
 describe('validateRegistration', () => {
@@ -34,7 +34,7 @@ describe('validateRegistration', () => {
     expect(errors).toHaveProperty('members');
   });
 
-  it.each(['0171234567', '02123456789', '+8801712345678', 'abc'])('rejects WhatsApp number %s', (whatsapp) => {
+  it.each(['0171234567', '02123456789', '01212345678', '+8811712345678', 'abc'])('rejects WhatsApp number %s', (whatsapp) => {
     expect(validateRegistration(registrationBody({ whatsapp })).errors).toHaveProperty('whatsapp');
   });
 
@@ -52,6 +52,43 @@ describe('validateRegistration', () => {
     const { data } = validateRegistration(registrationBody({ registrationType: 'team', teamName: 'X', members: ['A', 'B', 'C', 'D'], teamLeader: 7 }));
     expect(data.members).toEqual(['A', 'B', 'C']);
     expect(data.fullName).toBe('A');
+  });
+});
+
+describe('normalisers', () => {
+  it.each([
+    ['01712345678', '01712345678'],
+    ['+8801712345678', '01712345678'],
+    ['008801712345678', '01712345678'],
+    ['০১৭১২৩৪৫৬৭৮', '01712345678'],
+    [' 017 1234-5678 ', '01712345678'],
+    ['88017', '88017'],
+  ])('normalisePhone(%s) = %s', (input, out) => expect(normalisePhone(input)).toBe(out));
+
+  it.each([
+    ['https://github.com/rahim-dev', 'rahim-dev'],
+    ['http://www.github.com/rahim-dev/repo?tab=1', 'rahim-dev'],
+    ['github.com/rahim-dev/', 'rahim-dev'],
+    ['@Rahim', 'Rahim'],
+    ['plain', 'plain'],
+  ])('normaliseGithub(%s) = %s', (input, out) => expect(normaliseGithub(input)).toBe(out));
+
+  it('suggests a fix for common email typos only', () => {
+    expect(suggestEmail('rahim@gmial.com')).toBe('rahim@gmail.com');
+    expect(suggestEmail('rahim@gmail.con')).toBe('rahim@gmail.com');
+    expect(suggestEmail('rahim@yaho.com')).toBe('rahim@yahoo.com');
+    expect(suggestEmail('rahim@gmail.com')).toBeNull();
+    expect(suggestEmail('rahim@du.ac.bd')).toBeNull();
+    expect(suggestEmail('nope')).toBeNull();
+  });
+
+  it('counts Bangla text by characters, like the database', () => {
+    expect(validateRegistration(registrationBody({ fullName: 'ক'.repeat(LIMITS.fullName) })).errors).toEqual({});
+    expect(validateRegistration(registrationBody({ fullName: 'ক'.repeat(LIMITS.fullName + 1) })).errors).toHaveProperty('fullName');
+  });
+
+  it('says how many digits a phone number has when the length is wrong', () => {
+    expect(validateRegistration(registrationBody({ whatsapp: '0171234567' })).errors.whatsapp).toContain('১০');
   });
 });
 

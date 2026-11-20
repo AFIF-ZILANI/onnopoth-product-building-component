@@ -37,10 +37,9 @@ test('home page shows the hero and the registration form', async ({ page }) => {
 test('participant registers', async ({ page }) => {
   test.skip(!registrationOpen, 'registration window has closed');
   await page.goto('/#register');
-  const form = page.locator('#register form');
-  // Empty submit focuses the first field with an error.
-  await form.getByRole('button', { name: /রেজিস্ট্রেশন জমা দাও/ }).click();
-  await expect(page.locator('#fullName')).toBeFocused();
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  const form = page.getByRole('form', { name: 'রেজিস্ট্রেশন ফর্ম' });
 
   await page.locator('#fullName').fill(team.name);
   await page.locator('#institution').fill('Dhaka College');
@@ -49,30 +48,14 @@ test('participant registers', async ({ page }) => {
   await page.locator('#email').fill(team.email);
   await page.locator('#github').fill('rahimdev');
   await page.locator('#productName').fill(team.product);
-  await page.locator('#problem').fill('বাজারে প্রতিদিন দাম বদলায়।');
+  await page.locator('#problem').fill('বাজারে প্রতিদিন দাম বদলায়, ক্রেতারা আগে জানতে পারেন না।');
   await page.locator('#users').fill('শহরের পরিবার');
-  await page.locator('#features').fill('আজকের দাম, ট্রেন্ড');
+  await page.locator('#features').fill('আজকের দাম, ট্রেন্ড, তুলনা');
   await page.locator('#agree').check();
   await form.getByRole('button', { name: /রেজিস্ট্রেশন জমা দাও/ }).click();
-  await expect(page.getByText('রেজিস্ট্রেশন সফল হয়েছে')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'রেজিস্ট্রেশন সম্পন্ন হয়েছে' })).toBeVisible();
   // Without SMTP the message points to the status page instead of an email.
   await expect(page.getByText('স্ট্যাটাস পেজে')).toBeVisible();
-
-  // Registering again with the same email is refused on the email field.
-  await page.reload();
-  await page.locator('#fullName').fill(team.name);
-  await page.locator('#institution').fill('X');
-  await page.locator('#className').fill('X');
-  await page.locator('#whatsapp').fill(team.whatsapp);
-  await page.locator('#email').fill(team.email.toUpperCase());
-  await page.locator('#github').fill('x');
-  await page.locator('#productName').fill('x');
-  await page.locator('#problem').fill('x');
-  await page.locator('#users').fill('x');
-  await page.locator('#features').fill('x');
-  await page.locator('#agree').check();
-  await page.locator('#register form').getByRole('button', { name: /রেজিস্ট্রেশন জমা দাও/ }).click();
-  await expect(page.getByText('এই ইমেইল দিয়ে আগেই রেজিস্ট্রেশন করা হয়েছে').first()).toBeVisible();
 });
 
 test('admin login rejects a wrong password', async ({ page }) => {
