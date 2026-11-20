@@ -27,7 +27,10 @@ async function adminLogin(page) {
 
 test('home page shows the hero and the registration form', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('লাইভ প্রোডাক্ট');
+  const h1 = page.getByRole('heading', { level: 1 });
+  await expect(h1).toHaveAccessibleName(/Product Building Competition/);
+  await expect(h1.getByRole('img')).toBeVisible();
+  await expect(page.getByText('লাইভ প্রোডাক্ট').first()).toBeVisible();
   await expect(page.locator('#register')).toBeVisible();
 });
 
